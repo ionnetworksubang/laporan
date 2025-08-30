@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laporan Instalasi</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+
+    <!-- Bagian Header (Jenis Laporan, Tanggal, Tim) -->
+    <div id="header-section">
+      <h2>Form Laporan Instalasi</h2>
+      <label>Jenis Laporan:</label>
+      <input type="text" value="Laporan Instalasi Subang" readonly>
+
+      <label for="tanggal">Tanggal:</label>
+      <input type="date" id="tanggal" required>
+
+      <label for="tim">Tim:</label>
+      <input type="text" id="tim" placeholder="Nama anggota tim" required>
+
+      <button onclick="okHeader()">OK</button>
+    </div>
+
+    <!-- Bagian Form Laporan (Isi Laporan per pelanggan) -->
+    <div id="form-section" style="display:none;">
+      <h3>Isi Laporan</h3>
+
+      <label>Nama:</label>
+      <input type="text" id="nama">
+
+      <label>CID:</label>
+      <input type="number" id="cid">
+
+      <label>Email:</label>
+      <input type="email" id="email">
+
+      <label>OLT:</label>
+      <select id="olt">
+        <option value="">-- Pilih OLT --</option>
+        <option>Mess Subang 1</option>
+        <option>Mess Subang 2</option>
+        <option>Gunung Tua</option>
+        <option>Dawuan</option>
+        <option>Pagaden</option>
+        <option>Tambak Dahan</option>
+        <option>Office Sales</option>
+      </select>
+
+      <label>ODP:</label>
+      <input type="text" id="odp">
+
+      <label>Port:</label>
+      <select id="port"></select>
+
+      <label>Jenis Perangkat:</label>
+      <select id="jenis">
+        <option value="">-- Pilih --</option>
+        <option>Raisecom</option>
+        <option>CData</option>
+        <option>CData Band</option>
+      </select>
+
+      <label>SN Perangkat:</label>
+      <input type="text" id="sn">
+
+      <label>Dropcore:</label>
+      <input type="text" value="200 meter" readonly>
+
+      <label>Paschord:</label>
+      <input type="text" value="1 pcs" readonly>
+
+      <label>Keterangan:</label>
+      <input type="text" value="Selesai dikerjakan" readonly>
+
+      <div class="btn-group">
+        <button onclick="tambahLaporan()">Tambah</button>
+        <button onclick="selesaiLaporan()">Selesai</button>
+      </div>
+    </div>
+
+    <!-- Hasil Laporan (Hidden) -->
+    <div id="hasil-section" style="display:none;">
+      <h3>Hasil Laporan</h3>
+      <pre id="hasil"></pre>
+      <div class="btn-group">
+        <button onclick="salinLaporan()">Salin Laporan</button>
+        <button onclick="kirimWhatsApp()">Kirim WhatsApp</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+          </html>
+          
