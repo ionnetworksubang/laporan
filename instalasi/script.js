@@ -1,113 +1,475 @@
-let laporanList = [];
-let headerData = { tanggal: "", tim: "" };
+    let formCount = 0;
+    
+   // Data ODP diperbaiki
+const odpData = [
+  "SUKALAKSANA 3","RAFA 3","GG SUKUN DEUI","CISAGA 8","CISAGA 7",
+  "CISAGA 6","SISI PRAMUKA","BATANG SUKAMELANG","GG TARUNA 2","CISAGA 13",
+  "CISAGA 12","CISAGA 11","CISAGA 10","CISAGA 9","CISAGA 5","CISAGA 4",
+  "CISAGA 3","CISAGA 2","CISAGA 1","BONGAS 18","BONGAS 17","BONGAS 16",
+  "RANCA 6","RANCA 5","RANCA 4","RANCA 3","RANCA 2","RANCA 1","PASE 10",
+  "PASE 9","PASE 8","PASE 7","PASE 6","PASE 5","PASE 4","PASE 3","PASE 2",
+  "PASE 1","BONGAS 15","BONGAS 14","BONGAS 13","BONGAS 5","BONGAS 4","BONGAS 3",
+  "RANCA 8","RANCA 7","RANCA 16","BONGAS 12","BONGAS 10","BONGAS 11","BONGAS 9",
+  "BONGAS 8","AKI LATIF","KAMARUNG 17","KAMARUNG 10","KAMARUNG 9","KAMARUNG 8",
+  "KAMARUNG 7","GARAGE","SUSUKAN 4","SUSUKAN 3","SUSUKAN 2","SUSUKAN 1","ZILAL",
+  "APANA","BAKTI ASIH","SAVANA","TK AL AMIN","BASUN","MESJID BAITULHADI","QREI",
+  "SITU IJAN","SURA","MARGANA","GALURA","KAMARUNG 6","KAMARUNG 5","KAMARUNG 4",
+  "KAMARUNG 3","KAMARUNG 2","KAMARUNG 1","MEE","MDKK","BALEBAT","BANGO","RANCABOGO",
+  "MUSALA","HJM","SHANKARA","DENJAKA","TK SUKARA","KARYA DUCK","JATI 2","JATI",
+  "LANGKAP","CIPACAR","SARADAN","PEKERTI","KAMARUNG 11","KAMARUNG 12","KAMARUNG 13",
+  "KAMARUNG 14","KAMARUNG 15","KAMARUNG 16","REMA","BTN GEMBOR 4","BTN GEMBOR 3",
+  "BTN GEMBOR 2","BTN GEMBOR 1","CISAMPIH","CISAMPIH 8","CISAMPIH 7","CISAMPIH 6",
+  "CISAMPIH 9","ODP BARGEDOS","GG UYUH 3","KELAPA RESIDANCE 2","DANGIANG",
+  "PERUM PONDOK GEDE","WADEDE","MARSINU","CISAMPIH 5","CISAMPIH 4","CISAMPIH 3",
+  "CISAMPIH 2","CISAMPIH 1","TUGU MARJAN","BAROKAH","PONDOK PESANTREN NURUL HUDA",
+  "JL. MARJAN 2","JL. MARJAN 1","CIBODAS 2","CIBODAS 1","BUMI GEMILANG","KURKUR",
+  "PERTIGAAN DAWUAN","JOYA","SD DAWUAN","RECIH","ROSEANNE","RA KHOERUNNISA","CITRA",
+  "IPUL","KINANTI","BEMO","KUMENDUNG","MINUL","DAWUAN ONCOM","ASSALAM","RAJAB",
+  "KOMORO","88","KITKYC","SAGAYA","PAKUAN","AGRO","MESJID AL JIHAD","LEBAK SIUH",
+  "LURAH SUHIM","PERIANGAN","MESJID PAJAKARAN","MESJID AL MUKAROMAH","PELANGI 1",
+  "AGRITAMA","HSH","KIA","DPI","GOONG","JAJA","PERUM PESONA ALAM DAWUAN 3",
+  "PERUM PESONA ALAM DAWUAN 2","PERUM PESONA ALAM DAWUAN 1","TAEKWANG 2","RAFA 2",
+  "GG. TAWES","KANTOR DESA SUKAMELANG 2","RIDERS","KIMIN","KANTOR DESA SUKAMELANG",
+  "BTN CIERENG 2","KAPIRARAY 3","LAMOKOTS","ALUN-ALUN 2","EFAB","BUBUN","SUGE","TULA",
+  "GG CENDERAWASIH","GG.SUKAGALIH 3","GG.SUKAGALIH 2","GG. KALAPA","SILIWANGI",
+  "PANGLEJAR 4","PANGLEJAR 3","IDI CAHDI 2","STIE","TJOKRO 2","SISICAI 6","BSR 9",
+  "DEPAN PPH","GRIYA PUTRA RESIDENCE","BSR 8","MAHKOTA 5","MAHKOTA 4","AREUY",
+  "ETNIK","FAVE","SMPN 6","HERJHON","BOYLER","GG. MAWAR 2","GG. RAMBUTAN",
+  "BABAKAN SUBANG","TANGKIL","LOBAK","PDI","KARANG KENDAL 2","BAP 5","BAP 4",
+  "PANGLEJAR 6","PEJUANG","NUSA INDAH","BAP 6","JL AYAN","GG. TENGAH","ODP MAKHOTA 6",
+  "BCD","MAHKOTA 3","GG SERAM","DEDERUK","CISUGIH 3","CISUGIH 2","SELEDRI",
+  "JL.DUKUH RAYA 2","NANAS","MAN 1","SUKALAKSANA 2","NGEBUL","AL MADANI","SYARIAH",
+  "ODP PERDANA 2","WATERBOOM","ODP EPUL DEUI","RIMBUN","CONTER 2","DUSUN BABAKAN 3",
+  "BAPANG 5","LAPANG SIDODADI","RANGGADIPA"
 
-// isi dropdown port
-window.onload = function() {
-  const portSelect = document.getElementById("port");
-  for (let i = 1; i <= 16; i++) {
-    let opt = document.createElement("option");
-    opt.value = i;
-    opt.textContent = i;
-    portSelect.appendChild(opt);
-  }
-};
 
-// validasi header
-function okHeader() {
-  const tanggal = document.getElementById("tanggal").value;
-  const tim = document.getElementById("tim").value;
+    ];
 
-  if (!tanggal || !tim) {
-    alert("Tanggal dan Tim wajib diisi!");
-    return;
-  }
-
-  headerData.tanggal = tanggal;
-  headerData.tim = tim;
-
-  document.getElementById("header-section").style.display = "none";
-  document.getElementById("form-section").style.display = "block";
-}
-
-// tambah laporan
-function tambahLaporan() {
-  const nama = document.getElementById("nama").value.trim();
-  const cid = document.getElementById("cid").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const olt = document.getElementById("olt").value;
-  const odp = document.getElementById("odp").value.trim();
-  const port = document.getElementById("port").value;
-  const jenis = document.getElementById("jenis").value;
-  const sn = document.getElementById("sn").value.trim();
-
-  if (!nama || !cid || !email || !olt || !odp || !port || !jenis || !sn) {
-    alert("Semua field wajib diisi!");
-    return;
-  }
-
-  // validasi unik
-  for (let lap of laporanList) {
-    if (lap.cid === cid || lap.email === email || lap.sn === sn || lap.nama === nama) {
-      alert("Nama, CID, Email, dan SN tidak boleh sama dengan laporan sebelumnya!");
-      return;
+    // Fungsi untuk update tanggal (hanya hari, tanggal, bulan, tahun)
+    function updateDate() {
+      const now = new Date();
+      const hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+      const bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 
+                    'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+      
+      const hariStr = hari[now.getDay()];
+      const tanggal = now.getDate();
+      const bulanStr = bulan[now.getMonth()];
+      const tahun = now.getFullYear();
+      
+      const dateString = `${hariStr}, ${tanggal} ${bulanStr} ${tahun}`;
+      document.getElementById('currentDate').textContent = dateString;
+      
+      // Set nilai default untuk tanggal laporan jika kosong
+      if (!document.getElementById('reportDate').value) {
+        document.getElementById('reportDate').value = dateString;
+      }
     }
-  }
 
-  // validasi SN
-  if (jenis === "Raisecom" && !sn.startsWith("RCM")) {
-    alert("SN Raisecom wajib diawali 'RCM'");
-    return;
-  }
-  if ((jenis.includes("CData")) && !sn.startsWith("DF1D-")) {
-    alert("SN CData wajib diawali 'DF1D-'");
-    return;
-  }
+    // Format tanggal untuk placeholder
+    function getDefaultDate() {
+      const now = new Date();
+      const hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+      const bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 
+                    'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+      
+      const hariStr = hari[now.getDay()];
+      const tanggal = now.getDate();
+      const bulanStr = bulan[now.getMonth()];
+      const tahun = now.getFullYear();
+      
+      return `${hariStr}, ${tanggal} ${bulanStr} ${tahun}`;
+    }
 
-  let laporan = {
-    no: laporanList.length + 1,
-    nama, cid, email, olt, odp, port, jenis, sn
-  };
-  laporanList.push(laporan);
+    const formTemplates = {
+      instalasi: `
+        <div class="form-header">
+          <h3>Instalasi Baru</h3>
+        </div>
+        <input type="hidden" id="jenis{id}" value="Instalasi">
+        
+        <label for="nama{id}">Nama:</label>
+        <input type="text" id="nama{id}" placeholder="Nama pelanggan">
+        
+        <label for="cid{id}">CID:</label>
+        <input type="text" id="cid{id}" placeholder="Nomor CID">
+        
+        <label for="email{id}">Email:</label>
+        <input type="email" id="email{id}" placeholder="Email pelanggan">
+        
+        <label for="olt{id}">OLT:</label>
+        <select id="olt{id}">
+          <option value="">-- Pilih OLT --</option>
+          <option value="OFFICE SUBANG RAISECOM">OFFICE SUBANG RAISECOM</option>
+          <option value="TAMBAKDAHAN SUBANG">TAMBAKDAHAN SUBANG</option>
+          <option value="PEGADEN SUBANG">PEGADEN SUBANG</option>
+          <option value="DAWUAN">DAWUAN</option>
+          <option value="MESS SUBANG 2">MESS SUBANG 2</option>
+          <option value="GUNUNG TUA">GUNUNG TUA</option>
+          <option value="MESS SUBANG"> MESS SUBANG</option>
 
-  alert("Laporan berhasil ditambahkan!");
-  document.getElementById("form-section").reset;
-  document.getElementById("nama").value = "";
-  document.getElementById("cid").value = "";
-  document.getElementById("email").value = "";
-  document.getElementById("odp").value = "";
-  document.getElementById("sn").value = "";
-}
+        </select>
+        
+        <div class="form-grid">
+          <div class="search-container">
+            <label for="odp{id}">ODP:</label>
+            <input type="text" id="odp{id}" placeholder="Ketik untuk mencari ODP" oninput="searchODP(this, 'odpResults{id}')">
+            <div class="search-results" id="odpResults{id}"></div>
+          </div>
+          <div>
+            <label for="port{id}">Port:</label>
+            <select id="port{id}">
+              <option value="">-- Pilih Port --</option>
+              <option value="1">Port 1</option>
+              <option value="2">Port 2</option>
+              <option value="3">Port 3</option>
+              <option value="4">Port 4</option>
+              <option value="5">Port 5</option>
+              <option value="6">Port 6</option>
+              <option value="7">Port 7</option>
+              <option value="8">Port 8</option>
+              <option value="9">Port 9</option>
+              <option value="10">Port 10</option>
+              <option value="11">Port 11</option>
+              <option value="12">Port 12</option>
+              <option value="13">Port 13</option>
+              <option value="14">Port 14</option>
+              <option value="15">Port 15</option>
+              <option value="16">Port 16</option>
+            </select>
+          </div>
+        </div>
+        
+        <label for="jenis_perangkat{id}">Jenis Perangkat:</label>
+        <select id="jenis_perangkat{id}">
+          <option value="">-- Pilih --</option>
+          <option value="XPON ONU">XPON ONU</option>
+          <option value="RISECOME">RISECOME</option>
+          </select>
+        
+        <label for="sn_perangkat{id}">SN Perangkat:</label>
+        <input type="text" id="sn_perangkat{id}" placeholder="Serial number perangkat">
+        
+        <div class="form-grid">
+          <div>
+            <label for="dropcore{id}">Dropcore:</label>
+            <select id="dropcore{id}">
+              <option value="">Pilih panjang</option>
+              <option value="50 meter">50 meter</option>
+              <option value="100 meter">100 meter</option>
+              <option value="150 meter">150 meter</option>
+              <option value="200 meter" selected>200 meter</option>
+              <option value="250 meter">250 meter</option>
+              <option value="300 meter">300 meter</option>
+            </select>
+          </div>
+          <div>
+            <label for="patchcord{id}">Patchcord:</label>
+            <select id="patchcord{id}">
+              <option value="">Pilih jumlah</option>
+              <option value="1 pcs" selected>1 pcs</option>
+              <option value="2 pcs">2 pcs</option>
+              <option value="3 pcs">3 pcs</option>
+            </select>
+          </div>
+        </div>
+        
+        <label for="keterangan{id}">Keterangan:</label>
+        <input type="text" id="keterangan{id}" value="Selesai">
+      `,
+      
+      reschedule: `
+        <div class="form-header">
+          <h3>Reschedule</h3>
+        </div>
+        <input type="hidden" id="jenis{id}" value="Reschedule">
+        
+        <label for="cid{id}">CID</label>
+        <input type="text" id="cid{id}" placeholder="Nomor CID">
+        
+        <label for="nama{id}">Nama Pelanggan</label>
+        <input type="text" id="nama{id}" placeholder="Nama pelanggan">
+        
+        <label for="alasan{id}">Alasan Reschedule</label>
+        <select id="alasan{id}">
+          <option value="">Pilih Alasan</option>
+          <option value="Pelanggan tidak ada di tempat">Pelanggan tidak ada di tempat</option>
+          <option value="Kendala teknis">Kendala teknis</option>
+          <option value="Cuaca buruk">Cuaca buruk</option>
+          <option value="Lainnya">Lainnya</option>
+        </select>
+        
+        <label for="keterangan{id}">Keterangan Tambahan</label>
+        <textarea id="keterangan{id}" placeholder="Penjelasan detail" rows="2"></textarea>
+        
+        <label for="jadwal{id}">Jadwal Baru</label>
+        <input type="date" id="jadwal{id}">
+      `,
+      
+      maintenance: `
+        <div class="form-header">
+          <h3>Maintenance</h3>
+        </div>
+        <input type="hidden" id="jenis{id}" value="Maintenance">
 
-// selesai laporan
-function selesaiLaporan() {
-  if (laporanList.length === 0) {
-    alert("Belum ada laporan ditambahkan!");
-    return;
-  }
+        <label for="cid{id}">CID</label>
+        <input type="text" id="cid{id}" placeholder="Nomor CID">
 
-  let hasil = `Laporan Instalasi Subang\nTanggal: ${headerData.tanggal}\nTim: ${headerData.tim}\n\n`;
+        <label for="nama{id}">Nama Pelanggan</label>
+        <input type="text" id="nama{id}" placeholder="Nama pelanggan">
 
-  laporanList.forEach(lap => {
-    hasil += `*Instalasi ${lap.no}*\n`;
-    hasil += `A/N: ${lap.nama}\nCID: ${lap.cid}\nEmail: ${lap.email}\nOLT: ${lap.olt}\nODP: ${lap.odp}\nPort: ${lap.port}\nJenis Perangkat: ${lap.jenis}\nSN: ${lap.sn}\nDropcore: 200 meter\nPaschord: 1 pcs\nKeterangan: Selesai dikerjakan\n\n`;
-  });
+        <label for="rodp{id}">R. ODP</label>
+        <input type="text" id="rodp{id}" placeholder="Referensi ODP">
 
-  document.getElementById("form-section").style.display = "none";
-  document.getElementById("hasil-section").style.display = "block";
-  document.getElementById("hasil").textContent = hasil;
-}
+        <div class="form-grid">
+          <div>
+            <label for="rcbefore{id}">R.C BEFORE</label>
+            <input type="text" id="rcbefore{id}" placeholder="Reading sebelum">
+          </div>
+          <div>
+            <label for="rcafter{id}">R.C AFTER</label>
+            <input type="text" id="rcafter{id}" placeholder="Reading sesudah">
+          </div>
+        </div>
 
-// salin laporan
-function salinLaporan() {
-  let text = document.getElementById("hasil").textContent;
-  navigator.clipboard.writeText(text).then(() => {
-    alert("Laporan berhasil disalin!");
-  });
-}
+        <label for="ken{id}">KEN (Kendala)</label>
+        <input type="text" id="ken{id}" placeholder="Masalah yang ditemukan">
 
-// kirim ke WhatsApp
-function kirimWhatsApp() {
-  let text = document.getElementById("hasil").textContent;
-  let url = "https://wa.me/?text=" + encodeURIComponent(text);
-  window.open(url, "_blank");
-}
+        <label for="tin{id}">TIN (Tindakan)</label>
+        <input type="text" id="tin{id}" placeholder="Tindakan perbaikan">
+
+        <div class="form-grid">
+          <div>
+            <label for="snlama{id}">SN Lama</label>
+            <input type="text" id="snlama{id}" placeholder="Serial number lama">
+          </div>
+          <div>
+            <label for="snbaru{id}">SN Baru</label>
+            <input type="text" id="snbaru{id}" placeholder="Serial number baru">
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div>
+            <label for="dropcore{id}">Dropcore</label>
+            <input type="text" id="dropcore{id}" placeholder="Panjang dropcore">
+          </div>
+          <div>
+            <label for="patchcord{id}">Patchcord</label>
+            <input type="text" id="patchcord{id}" placeholder="Panjang patchcord">
+          </div>
+        </div>
+
+        <label for="odp{id}">ODP</label>
+        <input type="text" id="odp{id}" placeholder="Kode ODP">
+
+        <label for="ket{id}">Keterangan</label>
+        <input type="text" id="ket{id}" value="SELESAI">
+      `
+    };
+
+    // Fungsi pencarian ODP
+    function searchODP(inputElement, resultsId) {
+      const searchTerm = inputElement.value.toLowerCase();
+      const resultsContainer = document.getElementById(resultsId);
+      
+      if (searchTerm.length < 2) {
+        resultsContainer.style.display = 'none';
+        return;
+      }
+      
+      const filteredODP = odpData.filter(odp => 
+        odp.toLowerCase().includes(searchTerm)
+      );
+      
+      if (filteredODP.length > 0) {
+        resultsContainer.innerHTML = filteredODP.map(odp => 
+          `<div class="search-result-item" onclick="selectODP('${inputElement.id}', '${odp}')">${odp}</div>`
+        ).join('');
+        resultsContainer.style.display = 'block';
+      } else {
+        resultsContainer.style.display = 'none';
+      }
+    }
+
+    function selectODP(inputId, odpValue) {
+      document.getElementById(inputId).value = odpValue;
+      document.getElementById(inputId.replace('odp', 'odpResults')).style.display = 'none';
+    }
+
+    document.addEventListener('click', function(e) {
+      if (!e.target.matches('.search-container input')) {
+        const allResults = document.querySelectorAll('.search-results');
+        allResults.forEach(result => {
+          result.style.display = 'none';
+        });
+      }
+    });
+
+    function addForm(type) {
+      if (!formTemplates[type]) {
+        alert('Jenis form tidak dikenali!');
+        return;
+      }
+      
+      formCount++;
+      const div = document.createElement("div");
+      div.className = "form";
+      div.id = "form" + formCount;
+
+      let formHTML = formTemplates[type].replace(/{id}/g, formCount);
+      formHTML += `<button class="delete" onclick="deleteForm(${formCount})">❌ Hapus</button>`;
+      
+      div.innerHTML = formHTML;
+      document.getElementById("forms").appendChild(div);
+
+      div.scrollIntoView({behavior: "smooth"});
+    }
+
+    function deleteForm(id) {
+      const form = document.getElementById("form" + id);
+      if (form && confirm("Hapus form ini?")) {
+        form.remove();
+      }
+    }
+
+    function formatDate(inputDate) {
+      if (!inputDate) return '';
+      const date = new Date(inputDate);
+      const day = date.getDate().toString().padStart(2, '0');
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const year = date.getFullYear();
+      return `${day}/${month}/${year}`;
+    }
+
+    function generate() {
+      const forms = document.querySelectorAll(".form");
+      if (forms.length === 0) {
+        alert("Tidak ada data untuk dilaporkan! Tambahkan form terlebih dahulu.");
+        return;
+      }
+
+      let judul = document.getElementById("reportTitle").value.trim();
+      let tanggal = document.getElementById("reportDate").value.trim();
+      let team = document.getElementById("teamName").value.trim();
+      
+      if (!judul) judul = "LAPORAN KEGIATAN SUBANG";
+      if (!tanggal) tanggal = getDefaultDate();
+      
+      let laporan = `${judul}\n${tanggal}\n`;
+      if (team) {
+        laporan += `Team : ${team}\n\n`;
+      } else {
+        laporan += `\n`;
+      }
+
+      let instalasiData = [];
+      let rescheduleData = [];
+      let maintenanceData = [];
+
+      forms.forEach((form) => {
+        let i = form.id.replace("form", "");
+        let jenis = document.getElementById("jenis"+i)?.value;
+        
+        if (jenis === "Instalasi") instalasiData.push({ id: i });
+        else if (jenis === "Reschedule") rescheduleData.push({ id: i });
+        else if (jenis === "Maintenance") maintenanceData.push({ id: i });
+      });
+
+      let nomorInstalasi = 1;
+      let nomorReschedule = 1;
+      let nomorMaintenance = 1;
+
+      if (instalasiData.length > 0) {
+        laporan += `INSTALASI BARU:\n`;
+        instalasiData.forEach(data => {
+          let i = data.id;
+          let cid = document.getElementById("cid"+i)?.value || '';
+          if (cid.trim()) {
+            laporan += `${nomorInstalasi}. Nama: ${document.getElementById("nama"+i)?.value || ''}\n`;
+            laporan += `CID: ${cid}\n`;
+            laporan += `Email: ${document.getElementById("email"+i)?.value || ''}\n`;
+            laporan += `OLT: ${document.getElementById("olt"+i)?.value || ''}\n`;
+            laporan += `ODP: ${document.getElementById("odp"+i)?.value || ''}\n`;
+            laporan += `Port: ${document.getElementById("port"+i)?.value || ''}\n`;
+            laporan += `Jenis Perangkat: ${document.getElementById("jenis_perangkat"+i)?.value || ''}\n`;
+            laporan += `SN Perangkat: ${document.getElementById("sn_perangkat"+i)?.value || ''}\n`;
+            laporan += `Dropcore: ${document.getElementById("dropcore"+i)?.value || ''}\n`;
+            laporan += `Patchcord: ${document.getElementById("patchcord"+i)?.value || ''}\n`;
+            laporan += `Keterangan: ${document.getElementById("keterangan"+i)?.value || 'Selesai'}\n\n`;
+            nomorInstalasi++;
+          }
+        });
+        laporan += `\n`;
+      }
+
+      if (rescheduleData.length > 0) {
+        laporan += `RESCHEDULE:\n`;
+        rescheduleData.forEach(data => {
+          let i = data.id;
+          let cid = document.getElementById("cid"+i)?.value || '';
+          if (cid.trim()) {
+            laporan += `${nomorReschedule}. CID: ${cid}\n`;
+            laporan += `A/N: ${document.getElementById("nama"+i)?.value || ''}\n`;
+            laporan += `Alasan: ${document.getElementById("alasan"+i)?.value || ''}\n`;
+            laporan += `Keterangan: ${document.getElementById("keterangan"+i)?.value || ''}\n`;
+            laporan += `Jadwal Baru: ${formatDate(document.getElementById("jadwal"+i)?.value)}\n`;
+            laporan += `Status: RESCHEDULE\n\n`;
+            nomorReschedule++;
+          }
+        });
+        laporan += `\n`;
+      }
+
+      if (maintenanceData.length > 0) {
+        laporan += `MAINTENANCE:\n`;
+        maintenanceData.forEach(data => {
+          let i = data.id;
+          let cid = document.getElementById("cid"+i)?.value || '';
+          if (cid.trim()) {
+            laporan += `${nomorMaintenance}. CID: ${cid}\n`;
+            laporan += `A/N: ${document.getElementById("nama"+i)?.value || ''}\n`;
+            laporan += `R. ODP: ${document.getElementById("rodp"+i)?.value || ''}\n`;
+            laporan += `R.C BEFORE: ${document.getElementById("rcbefore"+i)?.value || ''}\n`;
+            laporan += `R.C AFTER: ${document.getElementById("rcafter"+i)?.value || ''}\n`;
+            laporan += `KEN: ${document.getElementById("ken"+i)?.value || ''}\n`;
+            laporan += `TIN: ${document.getElementById("tin"+i)?.value || ''}\n`;
+            laporan += `SN LAMA: ${document.getElementById("snlama"+i)?.value || ''}\n`;
+            laporan += `SN BARU: ${document.getElementById("snbaru"+i)?.value || ''}\n`;
+            laporan += `DROPCORE: ${document.getElementById("dropcore"+i)?.value || ''}\n`;
+            laporan += `PATCHCORD: ${document.getElementById("patchcord"+i)?.value || ''}\n`;
+            laporan += `ODP: ${document.getElementById("odp"+i)?.value || ''}\n`;
+            laporan += `KET: ${document.getElementById("ket"+i)?.value || 'SELESAI'}\n\n`;
+            nomorMaintenance++;
+          }
+        });
+      }
+
+      document.getElementById("output").innerText = laporan.trim();
+    }
+
+    function sendWA() {
+      let text = document.getElementById("output").innerText;
+      if (!text) {
+        alert("Buat laporan dulu sebelum kirim ke WhatsApp!");
+        return;
+      }
+      let url = "https://wa.me/?text=" + encodeURIComponent(text);
+      window.open(url, "_blank");
+    }
+
+    function resetLaporan() {
+      if (confirm("Yakin ingin menghapus semua data?")) {
+        document.getElementById("forms").innerHTML = "";
+        document.getElementById("output").innerText = "";
+        document.getElementById("teamName").value = "";
+        document.getElementById("reportTitle").value = "LAPORAN  SUBANG";
+        document.getElementById("reportDate").value = "";
+        formCount = 0;
+        updateDate();
+      }
+    }
+
+    window.onload = function() {
+      updateDate();
+    };

@@ -8,89 +8,39 @@
 </head>
 <body>
   <div class="container">
+    <h2>Laporan</h2>
+    <div class="subtitle">Instalasi, Reschedule & Maintenance</div>
 
-    <!-- Bagian Header (Jenis Laporan, Tanggal, Tim) -->
-    <div id="header-section">
-      <h2>Form Laporan Instalasi</h2>
-      <label>Jenis Laporan:</label>
-      <input type="text" value="Laporan Instalasi Subang" readonly>
-
-      <label for="tanggal">Tanggal:</label>
-      <input type="date" id="tanggal" required>
-
-      <label for="tim">Tim:</label>
-      <input type="text" id="tim" placeholder="Nama anggota tim" required>
-
-      <button onclick="okHeader()">OK</button>
+    <div class="date-display" id="currentDate">
+      <!-- Ditampilkan oleh JavaScript -->
     </div>
 
-    <!-- Bagian Form Laporan (Isi Laporan per pelanggan) -->
-    <div id="form-section" style="display:none;">
-      <h3>Isi Laporan</h3>
-
-      <label>Nama:</label>
-      <input type="text" id="nama">
-
-      <label>CID:</label>
-      <input type="number" id="cid">
-
-      <label>Email:</label>
-      <input type="email" id="email">
-
-      <label>OLT:</label>
-      <select id="olt">
-        <option value="">-- Pilih OLT --</option>
-        <option>Mess Subang 1</option>
-        <option>Mess Subang 2</option>
-        <option>Gunung Tua</option>
-        <option>Dawuan</option>
-        <option>Pagaden</option>
-        <option>Tambak Dahan</option>
-        <option>Office Sales</option>
-      </select>
-
-      <label>ODP:</label>
-      <input type="text" id="odp">
-
-      <label>Port:</label>
-      <select id="port"></select>
-
-      <label>Jenis Perangkat:</label>
-      <select id="jenis">
-        <option value="">-- Pilih --</option>
-        <option>Raisecom</option>
-        <option>CData</option>
-        <option>CData Band</option>
-      </select>
-
-      <label>SN Perangkat:</label>
-      <input type="text" id="sn">
-
-      <label>Dropcore:</label>
-      <input type="text" value="200 meter" readonly>
-
-      <label>Paschord:</label>
-      <input type="text" value="1 pcs" readonly>
-
-      <label>Keterangan:</label>
-      <input type="text" value="Selesai dikerjakan" readonly>
-
-      <div class="btn-group">
-        <button onclick="tambahLaporan()">Tambah</button>
-        <button onclick="selesaiLaporan()">Selesai</button>
-      </div>
+    <div class="header-input">
+      <label>Judul Laporan</label>
+      <input type="text" id="reportTitle" value="LAPORAN INSTALASI SUBANG">
+      
+      <label>Tanggal Laporan</label>
+      <input type="text" id="reportDate" placeholder="Contoh: Rabu, 24 September 2025">
+      
+      <label>Nama Tim</label>
+      <input type="text" id="teamName" placeholder="Contoh : Ramdan & Adrian">
     </div>
 
-    <!-- Hasil Laporan (Hidden) -->
-    <div id="hasil-section" style="display:none;">
-      <h3>Hasil Laporan</h3>
-      <pre id="hasil"></pre>
-      <div class="btn-group">
-        <button onclick="salinLaporan()">Salin Laporan</button>
-        <button onclick="kirimWhatsApp()">Kirim WhatsApp</button>
-      </div>
+    <div id="forms"></div>
+
+    <div class="btn-group">
+      <button class="add-instalasi" onclick="addForm('instalasi')"> + Instalasi</button>
+      <button class="add-reschedule" onclick="addForm('reschedule')"> + Reschedule</button>
+      <button class="add-maintenance" onclick="addForm('maintenance')"> + Maintenance</button>
     </div>
 
+    <div class="btn-group">
+      <button class="generate" onclick="generate()">Buat Laporan</button>
+      <button class="wa" onclick="sendWA()">Kirim via WhatsApp</button>
+      <button class="reset" onclick="resetLaporan()">Reset Laporan</button>
+    </div>
+ <pre id="output"></pre>
+ 
   </div>
 
   <script src="script.js"></script>
