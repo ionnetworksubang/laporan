@@ -76,48 +76,52 @@
       box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     }
 
-    .add-instalasi { 
-      background: linear-gradient(135deg, #00b894, #00a085);
-      color: white;
-    }
-    .add-instalasi:hover { background: linear-gradient(135deg, #00a085, #008c75); }
+.btn-group button {
+  border: none;
+  padding: 12px 20px;
+  border-radius: 30px; /* rounded besar */
+  margin: 6px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+}
 
-    .add-reschedule { 
-      background: linear-gradient(135deg, #fdcb6e, #f39c12);
-      color: white;
-    }
-    .add-reschedule:hover { background: linear-gradient(135deg, #f39c12, #e67e22); }
+/* Tombol dengan gradient */
+.add-instalasi {
+  background: linear-gradient(135deg, #36d1dc, #5b86e5); /* biru gradasi */
+}
+.add-reschedule {
+  background: linear-gradient(135deg, #ff9966, #ff5e62); /* oranye merah gradasi */
+}
+.add-maintenance {
+  background: linear-gradient(135deg, #757f9a, #d7dde8); /* abu-abu stylish */
+  color: #222;
+}
 
-    .add-maintenance { 
-      background: linear-gradient(135deg, #6c5ce7, #5b4fcf);
-      color: white;
-    }
-    .add-maintenance:hover { background: linear-gradient(135deg, #5b4fcf, #4a43b8); }
+.generate {
+  background: linear-gradient(135deg, #56ab2f, #a8e063); /* hijau segar */
+}
+.wa {
+  background: linear-gradient(135deg, #25d366, #128c7e); /* hijau WhatsApp */
+}
+.reset {
+  background: linear-gradient(135deg, #eb3349, #f45c43); /* merah gradasi */
+}
 
-    .generate { 
-      background: linear-gradient(135deg, #3498db, #2980b9);
-      color: white;
-    }
-    .generate:hover { background: linear-gradient(135deg, #2980b9, #21618c); }
-
-    .wa { 
-      background: linear-gradient(135deg, #25d366, #128c7e);
-      color: white;
-    }
-    .wa:hover { background: linear-gradient(135deg, #128c7e, #0d6e5f); }
-
-    .reset { 
-      background: linear-gradient(135deg, #95a5a6, #7f8c8d);
-      color: white;
-    }
-    .reset:hover { background: linear-gradient(135deg, #7f8c8d, #6c7b7d); }
-
-    .delete { 
-      background: linear-gradient(135deg, #e74c3c, #c0392b);
-      color: white;
-      position: absolute;
-      top: 15px;
-      right: 15px;
+/* Hover effect */
+.btn-group button:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 12px rgba(0,0,0,0.25);
+}x
+.delete { 
+  background: #bdc3c7;   /* warna default abu-abu biasa */
+  color: white;
+  position: absolute;
+  top: 15px;
+  right: 15px;
       padding: 6px 12px;
       font-size: 12px;
       min-width: auto;

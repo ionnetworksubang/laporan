@@ -88,16 +88,16 @@ const odpData = [
         </div>
         <input type="hidden" id="jenis{id}" value="Instalasi">
         
-        <label for="nama{id}">Nama:</label>
+        <label for="nama{id}">Nama :</label>
         <input type="text" id="nama{id}" placeholder="Nama pelanggan">
         
-        <label for="cid{id}">CID:</label>
+        <label for="cid{id}">CID :</label>
         <input type="text" id="cid{id}" placeholder="Nomor CID">
         
-        <label for="email{id}">Email:</label>
+        <label for="email{id}">Email :</label>
         <input type="email" id="email{id}" placeholder="Email pelanggan">
         
-        <label for="olt{id}">OLT:</label>
+        <label for="olt{id}">OLT :</label>
         <select id="olt{id}">
           <option value="">-- Pilih OLT --</option>
           <option value="OFFICE SUBANG RAISECOM">OFFICE SUBANG RAISECOM</option>
@@ -112,69 +112,66 @@ const odpData = [
         
         <div class="form-grid">
           <div class="search-container">
-            <label for="odp{id}">ODP:</label>
+            <label for="odp{id}">ODP :</label>
             <input type="text" id="odp{id}" placeholder="Ketik untuk mencari ODP" oninput="searchODP(this, 'odpResults{id}')">
             <div class="search-results" id="odpResults{id}"></div>
           </div>
           <div>
-            <label for="port{id}">Port:</label>
+            <label for="port{id}">Port :</label>
             <select id="port{id}">
               <option value="">-- Pilih Port --</option>
-              <option value="1">Port 1</option>
-              <option value="2">Port 2</option>
-              <option value="3">Port 3</option>
-              <option value="4">Port 4</option>
-              <option value="5">Port 5</option>
-              <option value="6">Port 6</option>
-              <option value="7">Port 7</option>
-              <option value="8">Port 8</option>
-              <option value="9">Port 9</option>
-              <option value="10">Port 10</option>
-              <option value="11">Port 11</option>
-              <option value="12">Port 12</option>
-              <option value="13">Port 13</option>
-              <option value="14">Port 14</option>
-              <option value="15">Port 15</option>
-              <option value="16">Port 16</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+              <option value="13">13</option>
+              <option value="14">14</option>
+              <option value="15">15</option>
+              <option value="16">16</option>
             </select>
           </div>
         </div>
         
-        <label for="jenis_perangkat{id}">Jenis Perangkat:</label>
-        <select id="jenis_perangkat{id}">
-          <option value="">-- Pilih --</option>
-          <option value="XPON ONU">XPON ONU</option>
-          <option value="RISECOME">RISECOME</option>
-          </select>
-        
-        <label for="sn_perangkat{id}">SN Perangkat:</label>
-        <input type="text" id="sn_perangkat{id}" placeholder="Serial number perangkat">
-        
+<label for="jenis_perangkat{id}">Jenis Perangkat :</label>
+<select id="jenis_perangkat{id}" onchange="handleDeviceChange(this, {id})">
+  <option value="XPON ONU" selected>XPON ONU</option>
+  <option value="RISECOME">RISECOME</option>
+</select>
+
+<label for="sn_perangkat{id}">SN Perangkat:</label>
+<input type="text" id="sn_perangkat{id}" value="DF1D-" placeholder="Serial number perangkat">
+
         <div class="form-grid">
           <div>
-            <label for="dropcore{id}">Dropcore:</label>
+            <label for="dropcore{id}">Dropcore :</label>
             <select id="dropcore{id}">
               <option value="">Pilih panjang</option>
-              <option value="50 meter">50 meter</option>
-              <option value="100 meter">100 meter</option>
-              <option value="150 meter">150 meter</option>
-              <option value="200 meter" selected>200 meter</option>
-              <option value="250 meter">250 meter</option>
-              <option value="300 meter">300 meter</option>
+              <option value="50 Meter">50 Meter</option>
+              <option value="100 Meter">100 Meter</option>
+              <option value="150 Meter">150 Meter</option>
+              <option value="200 Meter" selected>200 Meter</option>
             </select>
           </div>
           <div>
-            <label for="patchcord{id}">Patchcord:</label>
+            <label for="patchcord{id}">Patchcord :</label>
             <select id="patchcord{id}">
               <option value="">Pilih jumlah</option>
-              <option value="1 pcs" selected>1 pcs</option>
-              <option value="2 pcs">2 pcs</option>
-              <option value="3 pcs">3 pcs</option>
+              <option value="1 Pcs" selected>1 Pcs</option>
+              <option value="2 Pcs">2 Pcs</option>
+              <option value="3 Pcs">3 Pcs</option>
             </select>
           </div>
         </div>
         
-        <label for="keterangan{id}">Keterangan:</label>
+        <label for="keterangan{id}">Keterangan :</label>
         <input type="text" id="keterangan{id}" value="Selesai">
       `,
       
@@ -184,11 +181,12 @@ const odpData = [
         </div>
         <input type="hidden" id="jenis{id}" value="Reschedule">
         
+        <label for="nama{id}">Nama Pelanggan</label>
+        <input type="text" id="nama{id}" placeholder="Nama pelanggan">
+
         <label for="cid{id}">CID</label>
         <input type="text" id="cid{id}" placeholder="Nomor CID">
         
-        <label for="nama{id}">Nama Pelanggan</label>
-        <input type="text" id="nama{id}" placeholder="Nama pelanggan">
         
         <label for="alasan{id}">Alasan Reschedule</label>
         <select id="alasan{id}">
@@ -202,8 +200,7 @@ const odpData = [
         <label for="keterangan{id}">Keterangan Tambahan</label>
         <textarea id="keterangan{id}" placeholder="Penjelasan detail" rows="2"></textarea>
         
-        <label for="jadwal{id}">Jadwal Baru</label>
-        <input type="date" id="jadwal{id}">
+        
       `,
       
       maintenance: `
@@ -217,25 +214,53 @@ const odpData = [
 
         <label for="nama{id}">Nama Pelanggan</label>
         <input type="text" id="nama{id}" placeholder="Nama pelanggan">
-
-        <label for="rodp{id}">R. ODP</label>
+       <div class="form-grid">
+          <div class="search-container">
+            <label for="odp{id}">ODP</label>
+            <input type="text" id="odp{id}" placeholder="Ketik untuk mencari ODP" oninput="searchODP(this, 'odpResults{id}')">
+            <div class="search-results" id="odpResults{id}"></div>
+          </div>
+          <div>
+            <label for="port{id}">Port</label>
+            <select id="port{id}">
+              <option value="">-- Pilih Port --</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+              <option value="13">13</option>
+              <option value="14">14</option>
+              <option value="15">15</option>
+              <option value="16">16</option>
+            </select>
+          </div>
+        </div>
+        <label for="rodp{id}">R ODP</label>
         <input type="text" id="rodp{id}" placeholder="Referensi ODP">
 
         <div class="form-grid">
           <div>
-            <label for="rcbefore{id}">R.C BEFORE</label>
-            <input type="text" id="rcbefore{id}" placeholder="Reading sebelum">
+            <label for="rcbefore{id}">R.C Before</label>
+            <input type="text" id="rcbefore{id}" placeholder="Redaman Client sebelum">
           </div>
           <div>
-            <label for="rcafter{id}">R.C AFTER</label>
-            <input type="text" id="rcafter{id}" placeholder="Reading sesudah">
+            <label for="rcafter{id}">R.C After</label>
+            <input type="text" id="rcafter{id}" placeholder="Redaman Client sesudah">
           </div>
         </div>
 
-        <label for="ken{id}">KEN (Kendala)</label>
+        <label for="ken{id}">Kendala</label>
         <input type="text" id="ken{id}" placeholder="Masalah yang ditemukan">
 
-        <label for="tin{id}">TIN (Tindakan)</label>
+        <label for="tin{id}">Tindakan</label>
         <input type="text" id="tin{id}" placeholder="Tindakan perbaikan">
 
         <div class="form-grid">
@@ -256,12 +281,11 @@ const odpData = [
           </div>
           <div>
             <label for="patchcord{id}">Patchcord</label>
-            <input type="text" id="patchcord{id}" placeholder="Panjang patchcord">
+            <input type="text" id="patchord{id}" placeholder="Panjang patchord">
           </div>
         </div>
 
-        <label for="odp{id}">ODP</label>
-        <input type="text" id="odp{id}" placeholder="Kode ODP">
+        
 
         <label for="ket{id}">Keterangan</label>
         <input type="text" id="ket{id}" value="SELESAI">
@@ -306,6 +330,17 @@ const odpData = [
       }
     });
 
+function handleDeviceChange(selectElement, id) {
+  const snInput = document.getElementById("sn_perangkat" + id);
+  if (selectElement.value === "RISECOME") {
+    snInput.value = "RCMG";
+  } else if (selectElement.value === "XPON ONU") {
+    snInput.value = "DF1D-";
+  } else {
+    snInput.value = "";
+  }
+}
+
     function addForm(type) {
       if (!formTemplates[type]) {
         alert('Jenis form tidak dikenali!');
@@ -318,7 +353,7 @@ const odpData = [
       div.id = "form" + formCount;
 
       let formHTML = formTemplates[type].replace(/{id}/g, formCount);
-      formHTML += `<button class="delete" onclick="deleteForm(${formCount})">❌ Hapus</button>`;
+      formHTML += `<button class="delete" onclick="deleteForm(${formCount})">x</button>`;
       
       div.innerHTML = formHTML;
       document.getElementById("forms").appendChild(div);
@@ -353,7 +388,7 @@ const odpData = [
       let tanggal = document.getElementById("reportDate").value.trim();
       let team = document.getElementById("teamName").value.trim();
       
-      if (!judul) judul = "LAPORAN KEGIATAN SUBANG";
+      if (!judul) judul = "*UPDATE LAPORAN INSTALASI SUBANG*";
       if (!tanggal) tanggal = getDefaultDate();
       
       let laporan = `${judul}\n${tanggal}\n`;
@@ -392,8 +427,8 @@ const odpData = [
             laporan += `OLT: ${document.getElementById("olt"+i)?.value || ''}\n`;
             laporan += `ODP: ${document.getElementById("odp"+i)?.value || ''}\n`;
             laporan += `Port: ${document.getElementById("port"+i)?.value || ''}\n`;
-            laporan += `Jenis Perangkat: ${document.getElementById("jenis_perangkat"+i)?.value || ''}\n`;
-            laporan += `SN Perangkat: ${document.getElementById("sn_perangkat"+i)?.value || ''}\n`;
+            laporan += `Jenis perangkat: ${document.getElementById("jenis_perangkat"+i)?.value || ''}\n`;
+            laporan += `SN perangkat: ${document.getElementById("sn_perangkat"+i)?.value || ''}\n`;
             laporan += `Dropcore: ${document.getElementById("dropcore"+i)?.value || ''}\n`;
             laporan += `Patchcord: ${document.getElementById("patchcord"+i)?.value || ''}\n`;
             laporan += `Keterangan: ${document.getElementById("keterangan"+i)?.value || 'Selesai'}\n\n`;
@@ -404,17 +439,16 @@ const odpData = [
       }
 
       if (rescheduleData.length > 0) {
-        laporan += `RESCHEDULE:\n`;
+        laporan += `Reschedule:\n`;
         rescheduleData.forEach(data => {
           let i = data.id;
           let cid = document.getElementById("cid"+i)?.value || '';
           if (cid.trim()) {
-            laporan += `${nomorReschedule}. CID: ${cid}\n`;
-            laporan += `A/N: ${document.getElementById("nama"+i)?.value || ''}\n`;
-            laporan += `Alasan: ${document.getElementById("alasan"+i)?.value || ''}\n`;
-            laporan += `Keterangan: ${document.getElementById("keterangan"+i)?.value || ''}\n`;
-            laporan += `Jadwal Baru: ${formatDate(document.getElementById("jadwal"+i)?.value)}\n`;
-            laporan += `Status: RESCHEDULE\n\n`;
+            laporan += `${nomorReschedule}. A/N : ${document.getElementById("nama"+i)?.value || ''}\n`;
+            laporan += `CID : ${cid}\n`;
+            laporan += `Alasan : ${document.getElementById("alasan"+i)?.value || ''}\n`;
+            laporan += `Keterangan : ${document.getElementById("keterangan"+i)?.value || ''}\n`;
+            laporan += `Status : Reschedule\n\n`;
             nomorReschedule++;
           }
         });
@@ -427,22 +461,38 @@ const odpData = [
           let i = data.id;
           let cid = document.getElementById("cid"+i)?.value || '';
           if (cid.trim()) {
-            laporan += `${nomorMaintenance}. CID: ${cid}\n`;
-            laporan += `A/N: ${document.getElementById("nama"+i)?.value || ''}\n`;
-            laporan += `R. ODP: ${document.getElementById("rodp"+i)?.value || ''}\n`;
-            laporan += `R.C BEFORE: ${document.getElementById("rcbefore"+i)?.value || ''}\n`;
-            laporan += `R.C AFTER: ${document.getElementById("rcafter"+i)?.value || ''}\n`;
-            laporan += `KEN: ${document.getElementById("ken"+i)?.value || ''}\n`;
-            laporan += `TIN: ${document.getElementById("tin"+i)?.value || ''}\n`;
-            laporan += `SN LAMA: ${document.getElementById("snlama"+i)?.value || ''}\n`;
-            laporan += `SN BARU: ${document.getElementById("snbaru"+i)?.value || ''}\n`;
-            laporan += `DROPCORE: ${document.getElementById("dropcore"+i)?.value || ''}\n`;
-            laporan += `PATCHCORD: ${document.getElementById("patchcord"+i)?.value || ''}\n`;
-            laporan += `ODP: ${document.getElementById("odp"+i)?.value || ''}\n`;
-            laporan += `KET: ${document.getElementById("ket"+i)?.value || 'SELESAI'}\n\n`;
+            laporan += `${nomorMaintenance}. A/N : ${document.getElementById("nama"+i)?.value || ''}\n`;
+            laporan += `CID : ${cid}\n`;
+            laporan += `ODP : ${document.getElementById("odp"+i)?.value || ''}\n`;
+            laporan += `PORT : ${document.getElementById("port"+i)?.value || ''}\n`;
+            laporan += `R. ODP : ${document.getElementById("rodp"+i)?.value || ''}\n`;
+            laporan += `R.C Before : ${document.getElementById("rcbefore"+i)?.value || ''}\n`;
+            laporan += `R.C After : ${document.getElementById("rcafter"+i)?.value || ''}\n`;
+            laporan += `Kendala : ${document.getElementById("ken"+i)?.value || ''}\n`;
+            laporan += `Tindakan : ${document.getElementById("tin"+i)?.value || ''}\n`;
+            laporan += `SN Lama : ${document.getElementById("snlama"+i)?.value || ''}\n`;
+            laporan += `SN Baru : ${document.getElementById("snbaru"+i)?.value || ''}\n`;
+            laporan += `Dropcore : ${document.getElementById("dropcore"+i)?.value || ''}\n`;
+            laporan += `Patchcord : ${document.getElementById("patchcord"+i)?.value || ''}\n`;
+            laporan += `Keterangan : ${document.getElementById("ket"+i)?.value || 'SELESAI'}\n\n`;
             nomorMaintenance++;
           }
         });
+        function validateForm(id) {
+  const cid = document.getElementById(`cid${id}`).value.trim();
+  const nama = document.getElementById(`nama${id}`).value.trim();
+  const odp = document.getElementById(`odp${id}`).value.trim();
+  const kendala = document.getElementById(`ken${id}`).value.trim();
+  const tindakan = document.getElementById(`tin${id}`).value.trim();
+
+  if (!cid || !nama || !odp || !kendala || !tindakan) {
+    alert("Harap isi CID, Nama, ODP, Kendala, dan Tindakan!");
+    return false;
+  }
+
+  return true; // port, dropcore, patchcord boleh kosong
+}
+
       }
 
       document.getElementById("output").innerText = laporan.trim();
