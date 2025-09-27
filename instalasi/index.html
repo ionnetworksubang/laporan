@@ -8,7 +8,7 @@
 </head>
 <body>
   <div class="container">
-    <h2>Laporan</h2>
+    <h2>Form Laporan Subang</h2>
     <div class="subtitle">Instalasi, Reschedule & Maintenance</div>
 
     <div class="date-display" id="currentDate">
@@ -16,7 +16,13 @@
 
     <div class="header-input">
       <label for="reportTitle">Judul Laporan</label>
-      <input type="text" id="reportTitle" value="LAPORAN KEGIATAN SUBANG">
+       <select id="reportTitle">
+    <option value="*LAPORAN INSTALASI SUBANG*">LAPORAN INSTALASI SUBANG</option>
+    <option value="*LAPORAN MAINTENANCE SUBANG*">LAPORAN MAINTENANCE SUBANG</option>
+    <option value="*LAPORAN INSTALASI & MAINTENANCE SUBANG*">
+      LAPORAN INSTALASI & MAINTENANCE SUBANG
+    </option>
+  </select>
       
       <label for="reportDate">Tanggal Laporan</label>
       <input type="text" id="reportDate" placeholder="Contoh: Rabu, 24 September 2025">
