@@ -3,40 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Laporan Subang</title>
+  <title>Laporan Terminate</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
-    <h2>Form Laporan Subang</h2>
-    <div class="subtitle">Instalasi, Reschedule & Maintenance</div>
+    <h2>Form Laporan Terminate Subang</h2>
+    <div class="subtitle">Terminate</div>
 
-    <div class="date-display" id="currentDate">
-      </div>
+    <div class="date-display" id="currentDate"></div>
 
     <div class="header-input">
       <label for="reportTitle">Judul Laporan</label>
-       <select id="reportTitle">
-    <option value="*LAPORAN INSTALASI SUBANG*">LAPORAN INSTALASI SUBANG</option>
-    <option value="*LAPORAN MAINTENANCE SUBANG*">LAPORAN MAINTENANCE SUBANG</option>
-    <option value="*LAPORAN INSTALASI & MAINTENANCE SUBANG*">
-      LAPORAN INSTALASI & MAINTENANCE SUBANG
-    </option>
-  </select>
+      <input type="text" id="ket{id}" value="LAPORAN TERMINATE SUBANG">
       
       <label for="reportDate">Tanggal Laporan</label>
       <input type="text" id="reportDate" placeholder="Contoh: Rabu, 24 September 2025">
       
       <label for="teamName">Nama Tim</label>
-      <input type="text" id="teamName" placeholder="Contoh: Ramdan & Adrian">
+      <input type="text" id="teamName" placeholder="Contoh: Ramdan">
     </div>
 
     <div id="forms"></div>
 
     <div class="btn-group">
-      <button class="add-instalasi" onclick="addForm('instalasi')"> + Instalasi</button>
-      <button class="add-reschedule" onclick="addForm('reschedule')"> + Reschedule</button>
-      <button class="add-maintenance" onclick="addForm('maintenance')"> + Maintenance</button>
+      <button class="add-instalasi" onclick="addForm('instalasi')">+ Terminate</button>
     </div>
 
     <div class="btn-group">
@@ -46,7 +37,6 @@
     </div>
     
     <pre id="output"></pre>
- 
   </div>
 
   <script src="script.js"></script>
