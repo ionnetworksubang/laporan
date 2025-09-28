@@ -38,7 +38,7 @@ const odpData = [
   "PANGLEJAR 6","PEJUANG","NUSA INDAH","BAP 6","JL AYAN","GG. TENGAH","ODP MAKHOTA 6",
   "BCD","MAHKOTA 3","GG SERAM","DEDERUK","CISUGIH 3","CISUGIH 2","SELEDRI",
   "JL.DUKUH RAYA 2","NANAS","MAN 1","SUKALAKSANA 2","NGEBUL","AL MADANI","SYARIAH",
-  "ODP PERDANA 2","WATERBOOM","ODP EPUL DEUI","RIMBUN","CONTER 2","DUSUN BABAKAN 3",
+  "ODP PERDANA 2","WATERBOOM","EPUL DEUI","RIMBUN","CONTER 2","DUSUN BABAKAN 3",
   "BAPANG 5","LAPANG SIDODADI","RANGGADIPA","SMJ","DODO","BAS","DT AQIQAH","OMLI",
   "LAPANG CIBAROLA","OKE 2","VOLLY 2","ARAB","ANGGUR XIV","PERDANA","JAKSA 3",
   "BABAKAN SUBANG 2","FLAMBOYAN 2","BLOK SAYUR 3","OFFICE SALES","GG MERAK 3","PUSAKA",
@@ -114,7 +114,7 @@ const odpData = [
   "BELITUNG","LAPANG SAMPEU","ALFOUR","ATREA","AKIMORA","JACE",
   "KIARA 5","GREEN SUBANG 2","GG.KIARA 4","KHAER","BAPE","PAHER",
   "BSR 7","BSR 6","KABOA","BANG KOMAR","PANGHEGAR","PAGADEN 1","PAGADEN 2",
-  "PAGADEN 3","PAGADEN 4","PEJUANG DALAM","POS 3",
+  "PAGADEN 3","PAGADEN 4","PEJUANG DALAM","POS 3","EPUL",
 ]
 
 // Fungsi untuk update tanggal (hanya hari, tanggal, bulan, tahun)
@@ -156,7 +156,7 @@ function getDefaultDate() {
 const formTemplates = {
   instalasi: `
     <div class="form-header">
-      <h3>INSTALASI*</h3>
+      <h3>INSTALASI</h3>
     </div>
     <input type="hidden" id="jenis{id}" value="Instalasi">
     
@@ -272,8 +272,12 @@ const formTemplates = {
     <label for="cid{id}">CID</label>
     <input type="number" id="cid{id}" inputmode="numeric" placeholder="Nomor CID (Wajib diisi)">
     
-    <label for="odp{id}">ODP</label>
-    <input type="text" id="odp{id}" placeholder="Nama ODP (opsional)">
+    <div class="search-container">
+            <label for="odp{id}">ODP</label>
+            <input type="text" id="odp{id}" placeholder="Ketik untuk mencari ODP (opsional)" 
+            oninput="searchODP(this, 'odpResults{id}', odpData)">
+            <div class="search-results" id="odpResults{id}"></div>
+    </div>
 
     <label for="rodp{id}">R. ODP</label>
     <input type="text" id="rodp{id}" placeholder="Redaman ODP (opsional)">
@@ -574,7 +578,7 @@ function generate() {
         if (dropcore) maintenanceLaporan += `Dropcore : ${dropcore}\n`;
         
         const patchcord = getValue("patchcord"+i);
-        if (patchcord) maintenanceLaporan += `Patchord : ${patchcord}\n`;
+        if (patchcord) maintenanceLaporan += `Patchcord : ${patchcord}\n`;
 
         const ket = getValue("ket"+i);
         if (ket) maintenanceLaporan += `Keterangan : ${ket || 'SELESAI'}\n\n`;
@@ -605,7 +609,7 @@ function resetLaporan() {
     document.getElementById("forms").innerHTML = "";
     document.getElementById("output").innerText = "";
     document.getElementById("teamName").value = "";
-    document.getElementById("reportTitle").value = "LAPORAN KEGIATAN SUBANG";
+    document.getElementById("reportTitle").value = "LAPORAN INSTALASI SUBANG";
     document.getElementById("reportDate").value = "";
     formCount = 0;
     updateDate(); // Reset date to current date
