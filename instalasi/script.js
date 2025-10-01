@@ -246,10 +246,14 @@ const formTemplates = {
     <label for="alasan{id}">Alasan Reschedule</label>
     <select id="alasan{id}">
       <option value="">Pilih Alasan</option>
-      <option value="Pelanggan tidak ada di tempat">Pelanggan tidak ada di tempat</option>
-      <option value="Kendala teknis">Kendala teknis</option>
-      <option value="Cuaca buruk">Cuaca buruk</option>
-      <option value="Larut malam">Larut malam</option>
+      <option value="Tidak ada orang di rumah">Tidak ada orang di rumah</option>
+      <option value="Kendala listrik">Kendala listrik</option>
+      <option value="Jarak terlalu jauh, menunggu pengembangan ODP">Jarak terlalu jauh, menunggu pengembangan ODP</option>
+      <option value="Hujan deras / cuaca buruk">Hujan deras / cuaca buruk</option>
+      <option value="Pemasangan malam hari sudah terlalu larut">Pemasangan malam hari sudah terlalu larut</option>
+      <option value="Perlu izin RT/RW">Perlu izin RT/RW</option>
+      <option value="ODP penuh, menunggu pengembangan ODP">ODP penuh, menunggu pegembagan ODP</option>
+      <option value="Pemilik rumah sedang kerja / sibuk">Pemilik rumah sedang kerja / sibuk</option>
       <option value="Lainnya">Lainnya</option>
     </select>
     
@@ -260,6 +264,34 @@ const formTemplates = {
     <input type="date" id="jadwal{id}">
   `,
   
+  cancel: `
+    <div class="form-header">
+      <h3>Reschedule</h3>
+    </div>
+    <input type="hidden" id="jenis{id}" value="Cancel">
+    <label for="nama{id}">Nama Pelanggan</label>
+    <input type="text" id="nama{id}" placeholder="Nama pelanggan (Wajib diisi)">
+
+     <label for="cid{id}">CID</label>
+    <input type="number" id="cid{id}" inputmode="numeric" placeholder="Nomor CID (Wajib diisi)">
+    <label for="alasan{id}">Alasan Cancel</label>
+    <select id="alasan{id}">
+      <option value="">Pilih Alasan</option>
+      <option value="Berubah pikiran (tidak jadi pasang)">Berubah pikiran (tidak jadi pasang).</option>
+      <option value="Sudah pasang provider lain">Sudah pasang provider lain.</option>
+      <option value="Tidak siap bayar">Tidak siap bayar</option>
+      <option value="Tidak ada orang di rumah saat teknisi datang">Tidak ada orang di rumah saat teknisi datang</option>
+      <option value="Gangguan teknis saat survey (akses rumah susah)">Gangguan teknis saat survey (akses rumah susah)</option>
+      <option value="Gangguan teknis saat survey (jarak terlalu jauh)">Gangguan teknis saat survey (jarak terlalu jauh)</option>
+      <option value="Kabel tidak memungkinkan untuk ditarik ke rumah pelanggan">Kabel tidak memungkinkan untuk ditarik ke rumah pelanggan</option>
+      <option value="Jaringan tidak tersedia di lokasi">Jaringan tidak tersedia di lokasi</option>
+      <option value="Lainnya">Lainnya</option>
+    </select>
+    
+    <label for="keterangan{id}">Keterangan Tambahan</label>
+    <textarea id="keterangan{id}" placeholder="Penjelasan detail (opsional)" rows="2"></textarea>
+  `,
+
   maintenance: `
     <div class="form-header">
       <h3>Maintenance</h3>
@@ -457,6 +489,7 @@ function generate() {
 
   let instalasiData = [];
   let rescheduleData = [];
+  let cancelData = [];
   let maintenanceData = [];
   
   let isLaporanValid = true; // Flag untuk validasi
@@ -467,11 +500,13 @@ function generate() {
     
     if (jenis === "Instalasi") instalasiData.push({ id: i });
     else if (jenis === "Reschedule") rescheduleData.push({ id: i });
+    else if (jenis === "Cancel") cancelData.push({ id: i });
     else if (jenis === "Maintenance") maintenanceData.push({ id: i });
   });
 
   let nomorInstalasi = 1;
   let nomorReschedule = 1;
+  let nomorCancel = 1;
   let nomorMaintenance = 1;
 
   if (instalasiData.length > 0) {
@@ -517,8 +552,8 @@ function generate() {
             break; // Hentikan loop
         }
 
-        rescheduleLaporan += `${nomorReschedule}. CID: ${cid}\n`;
-        rescheduleLaporan += `A/N: ${nama}\n`;
+         rescheduleLaporan += `A/N: ${nama}\n`;
+        rescheduleLaporan += `CID: ${cid}\n`;
         
         const alasan = getValue("alasan"+i);
         if (alasan) rescheduleLaporan += `Alasan: ${alasan}\n`;
@@ -537,6 +572,38 @@ function generate() {
 
     if (rescheduleLaporan) {
         laporan += `*RESCHEDULE*\n` + rescheduleLaporan;
+    }
+  }
+
+  if (cancelData.length > 0) {
+    let cancelLaporan = "";
+    // Menggunakan for...of loop agar bisa dihentikan di tengah jalan
+    for (const data of cancelData) {
+      let i = data.id;
+      let nama = getValue("nama"+i);
+      let cid = getValue("cid"+i);
+      if (nama && cid) {
+        const jadwal = document.getElementById("jadwal"+i)?.value;
+        
+
+         cancelLaporan += `${nomorCancel}. A/N: ${nama}\n`;
+        cancelLaporan += `CID: ${cid}\n`;
+        
+        const alasan = getValue("alasan"+i);
+        if (alasan) cancelLaporan += `Alasan: ${alasan}\n`;
+
+        const keterangan = getValue("keterangan"+i);
+        if (keterangan) cancelLaporan += `Keterangan: ${keterangan}\n`;
+        
+        
+        nomorCancel++;
+      }
+    }
+    
+    if (!isLaporanValid) return; // Hentikan fungsi jika laporan tidak valid
+
+    if (cancelLaporan) {
+        laporan += `*CANCEL*\n` + cancelLaporan;
     }
   }
 
