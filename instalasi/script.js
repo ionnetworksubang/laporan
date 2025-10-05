@@ -222,11 +222,11 @@ const formTemplates = {
           <option value="100 Meter">100 Meter</option>
           <option value="150 Meter">150 Meter</option>
           <option value="200 Meter" selected>200 Meter</option>
-          <option value="225 Meter" selected>225 Meter</option>
-          <option value="250 Meter" selected>250 Meter</option>
-          <option value="275 Meter" selected>275 Meter</option>
-          <option value="300 Meter" selected>300 Meter</option>
-          <option value="Kabel Terminate" selected>Kabel Terminate</option>
+          <option value="225 Meter">225 Meter</option>
+          <option value="250 Meter">250 Meter</option>
+          <option value="275 Meter">275 Meter</option>
+          <option value="300 Meter">300 Meter</option>
+          <option value="Kabel Terminate">Kabel Terminate</option>
         </select>
       </div>
       <div>
@@ -257,6 +257,7 @@ const formTemplates = {
     <label for="alasan{id}">Alasan Reschedule</label>
     <select id="alasan{id}">
       <option value="">Pilih Alasan</option>
+      <option value="Reschedule">Reschedule</option>
       <option value="Tidak ada orang di rumah">Tidak ada orang di rumah</option>
       <option value="Kendala listrik">Kendala listrik</option>
       <option value="Jarak terlalu jauh, menunggu pengembangan ODP">Jarak terlalu jauh, menunggu pengembangan ODP</option>
