@@ -129,8 +129,8 @@ const dsData = [
     "CHANDIKA KUSUMA", "ARDEN ZUHDI", "DWI HARI PURNAMA", "MOCH RIZKY RAMADHAN", 
     "GANI MAULAMA", "NAZAR YAHYA", "SOLEH SUANDA", "FIRLI APRILIA KULSUM", 
     "RONI CAHYANI", "MIFTAHUDDIN ALI", "DEFAN KAHFI ADHIGUNA", "BAGAS PERMANA",  
-    "NAUFAL AZHAR GUSTIANA TS SUBANG", "ILHAM RAMADHANI"
-
+    "NAUFAL AZHAR GUSTIANA TS SUBANG", "ILHAM RAMADHANI","DESTI ROSMALA", "MOCH NUR, SH"
+    ,"ARIEF SETIAWAN","R AMBAR SUSANTO","DESTI ROSMALA",
 ];
 
 const namaData = [
@@ -139,7 +139,8 @@ const namaData = [
     "SYAHID YUSUF TALAAT", "HENDRIK PERMANA SOPYAN", "ALVIN ALVINA",
     "GUGUN GUNAEDI", "HENDRYANA SISWANTO", "MUHAMMAD RAMDAN", "RIDHO SEPRIAN",
     "MUHAMMAD ADSA RABANI", "MUHAMAN RIDHO", "FIRMAN TEGAR", "HARYS HAQIM","ADRIAN MAULANA",
-    "GELAR RAHIM", "DONI ARIA PURNAMA", "KOMARUDIN", "RAFLY", "REYFAL"
+    "GELAR RAHIM", "DONI ARIA PURNAMA", "KOMARUDIN", "RAFLY", "REYFAL", 
+
 ]
     
 
@@ -194,7 +195,8 @@ const terminateTemplate = `
      <label for="jenis_perangkat{id}">Jenis Perangkat</label>
 <select id="jenis_perangkat{id}" onchange="updateSN('{id}')">
   <option value="">-- Pilih Jenis Perangkat (opsional) --</option>
-  <option value="C-DATA ONU">C-DATA ONU</option>
+  <option value="C-DATA XPON ONU">C-DATA XPON ONU</option>
+  <option value="C-DATA XPON DUAL-BAND ONU">C-DATA XPON DUAL-BAND ONU</option>
   <option value="RISECOME">RISECOME</option>
 </select>
 
@@ -275,12 +277,16 @@ function updateSN(id) {
   const jenis = document.getElementById("jenis_perangkat" + id).value;
   const snField = document.getElementById("sn_perangkat" + id);
 
-  if (jenis === "C-DATA ONU") {
+  if (jenis === "C-DATA XPON ONU") {
     // hanya kasih prefix, user bisa lanjut ngetik
     snField.value = "DF1D-";
     snField.focus();
     snField.setSelectionRange(snField.value.length, snField.value.length);
-  } else if (jenis === "RISECOME") {
+  } else if (jenis === "C-DATA DUAL-BAND XPON ONU") {
+    snField.value = "DF51";
+    snField.focus();
+    snField.setSelectionRange(snField.value.length, snField.value.length);
+     } else if (jenis === "RISECOME") {
     snField.value = "RCMG";
     snField.focus();
     snField.setSelectionRange(snField.value.length, snField.value.length);
