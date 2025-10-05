@@ -117,6 +117,7 @@ const odpData = [
   "PAGADEN 3","PAGADEN 4","PEJUANG DALAM","POS 3","EPUL",
   "REDOORZ","KENANGA 2","TAMBAKDAHAN 1","TAMBAKDAHAN 2","TAMBAKDAHAN 3",
   "TAMBAKDAHAN 4","TAMBAKDAHAN 5","TAMBAKDAHAN 6","TAMBAKDAHAN 7",
+  "DUREN MURAG","SAMS","LOLONG",
 ]
 
 // Fungsi untuk update tanggal (hanya hari, tanggal, bulan, tahun)
