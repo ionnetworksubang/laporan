@@ -203,10 +203,11 @@ const formTemplates = {
 <select id="jenis_perangkat{id}" onchange="updateSN('{id}')">
   <option value="">-- Pilih --</option>
   <option value="C-DATA XPON ONU">C-DATA XPON ONU</option>
-  <option value="C-DATA XPON ONU (DISMANTLE)">C-DATA XPON ONU (DISMANTLE)</option>
+  
   <option value="C-DATA XPON DUAL-BAND ONU">C-DATA XPON DUAL-BAND ONU</option>
   <option value="RISECOME">RISECOME</option>
   <option value="RISECOME (DISMANTLE)">RISECOME (DISMANTLE)</option>
+  <option value="C-DATA XPON ONU (DISMANTLE)">C-DATA XPON ONU (DISMANTLE)</option>
 </select>
 
 <label for="sn_perangkat{id}">SN Perangkat</label>
@@ -421,11 +422,7 @@ function updateSN(id) {
     snField.focus();
     snField.setSelectionRange(snField.value.length, snField.value.length);
   } else if (jenis === "C-DATA XPON DUAL-BAND ONU") {
-    snField.value = "DF51";
-    snField.focus();
-    snField.setSelectionRange(snField.value.length, snField.value.length);
-    } else if (jenis === "C-DATA XPON ONU (DISMANTLE)") {
-    snField.value = "DF1D-";
+    snField.value = "DF51-";
     snField.focus();
     snField.setSelectionRange(snField.value.length, snField.value.length);
     } else if (jenis === "RISECOME") {
@@ -434,6 +431,10 @@ function updateSN(id) {
     snField.setSelectionRange(snField.value.length, snField.value.length);
     } else if (jenis === "RISECOME (DISMANTLE)") {
     snField.value = "RCMG";
+    snField.focus();
+    snField.setSelectionRange(snField.value.length, snField.value.length);
+     } else if (jenis === "C-DATA XPON ONU (DISMANTLE)") {
+    snField.value = "DF1D-";
     snField.focus();
     snField.setSelectionRange(snField.value.length, snField.value.length);
   } else {
