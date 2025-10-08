@@ -501,13 +501,13 @@ function generate() {
     return;
   }
 
-  let judul = getValue("reportTitle") || "LAPORAN KEGIATAN SUBANG";
+  let judul = getValue("reportTitle") || "LAPORAN INSTALASI SUBANG";
   let tanggal = getValue("reportDate") || getDefaultDate();
   let team = getValue("teamName");
   
-  let laporan = `${judul}\n${tanggal}\n`;
+  let laporan = `${judul}\n${tanggal}\n\n`;
   if (team) {
-    laporan += `Team : ${team}\n\n`;
+    laporan += `*Team : ${team}*\n\n`;
   } else {
     laporan += `\n`;
   }
@@ -556,7 +556,7 @@ function generate() {
       }
     });
     if (instalasiLaporan) {
-      laporan += `*INSTALASI*\n` + instalasiLaporan;
+      laporan += `*INSTALASI*\n\n` + instalasiLaporan;
     }
   }
 
@@ -577,7 +577,7 @@ function generate() {
             break; // Hentikan loop
         }
 
-         rescheduleLaporan += `A/N: ${nama}\n`;
+         rescheduleLaporan += `${nomorReschedule} .A/N: ${nama}\n`;
         rescheduleLaporan += `CID: ${cid}\n`;
         
         const alasan = getValue("alasan"+i);
@@ -596,7 +596,7 @@ function generate() {
     if (!isLaporanValid) return; // Hentikan fungsi jika laporan tidak valid
 
     if (rescheduleLaporan) {
-        laporan += `*RESCHEDULE*\n` + rescheduleLaporan;
+        laporan += `*RESCHEDULE*\n\n` + rescheduleLaporan;
     }
   }
 
@@ -628,7 +628,7 @@ function generate() {
     if (!isLaporanValid) return; // Hentikan fungsi jika laporan tidak valid
 
     if (cancelLaporan) {
-        laporan += `*CANCEL*\n` + cancelLaporan;
+        laporan += `*CANCEL*\n\n` + cancelLaporan;
     }
   }
 

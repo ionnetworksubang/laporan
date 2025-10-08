@@ -338,7 +338,7 @@ function generate() {
     let tanggal = getValue("reportDate");
     let team = getValue("teamName");
     
-    let laporan = `${judul}\n${tanggal}\n`;
+    let laporan = `${judul}\n${tanggal}\n\n`;
     if (team) {
         laporan += `Team: ${team}\n\n`;
     } else {
