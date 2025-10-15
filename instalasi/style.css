@@ -12,163 +12,283 @@ body {
 }
 
 .container {
-  max-width: 700px;
+  max-width: 750px;
   margin: 20px auto;
   background: white;
-  padding: 25px;
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+  animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 h2 {
   text-align: center;
   color: #2c3e50;
   margin-bottom: 10px;
-  font-size: 28px;
+  font-size: 32px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #2c3e50, #3498db);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .subtitle {
   text-align: center;
   color: #7f8c8d;
-  margin-bottom: 25px;
-  font-size: 14px;
+  margin-bottom: 30px;
+  font-size: 15px;
+  font-weight: 500;
 }
 
 label {
   display: block;
   margin-top: 15px;
-  margin-bottom: 6px; /* Added margin for spacing */
+  margin-bottom: 8px;
   font-weight: 600;
   color: #34495e;
 }
 
 input, select, textarea {
   width: 100%;
-  padding: 12px;
-  border: 2px solid #ecf0f1;
+  padding: 14px;
+  border: 2px solid #e0e6ed;
   border-radius: 10px;
-  font-size: 14px;
+  font-size: 15px;
   transition: all 0.3s ease;
+  background: #f8fafc;
 }
 
 input:focus, select:focus, textarea:focus {
   border-color: #3498db;
   outline: none;
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+  box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1);
+  background: white;
+  transform: translateY(-2px);
 }
 
+/* STYLE UNTUK BUTTON DENGAN ICON */
 .btn-group {
-  margin-top: 20px;
+  margin-top: 25px;
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
 }
 
 button {
-  padding: 12px 20px;
+  padding: 14px 22px;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
   font-weight: 600;
   flex: 1;
-  min-width: 140px;
-  transition: all 0.3s ease;
+  min-width: 160px;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+button:hover::before {
+  left: 100%;
 }
 
 button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
 }
 
-.add-instalasi { 
-  background: linear-gradient(135deg, #00b894, #00a085);
+button:hover .btn-icon {
+  transform: scale(1.1);
+}
+
+/* Style untuk icon dalam button */
+.btn-icon {
+  margin-right: 10px;
+  font-size: 16px;
+  width: 18px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+/* === WARNA BUTTON YANG DIPERBAIKI === */
+
+.add-tambahinstalasi { 
+  background: linear-gradient(135deg, #10b981, #059669);
   color: white;
 }
-.add-instalasi:hover { background: linear-gradient(135deg, #00a085, #008c75); }
+.add-tambahinstalasi:hover { 
+  background: linear-gradient(135deg, #059669, #047857);
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+}
 
-.add-reschedule { 
-  background: linear-gradient(135deg, #fdcb6e, #f39c12);
+.add-jadwalulanginstalasi { 
+  background: linear-gradient(135deg, #f59e0b, #d97706);
   color: white;
 }
-.add-reschedule:hover { background: linear-gradient(135deg, #f39c12, #e67e22); }
+.add-rescheduleinstalasi:hover { 
+  background: linear-gradient(135deg, #d97706, #b45309);
+  box-shadow: 0 8px 25px rgba(245, 158, 11, 0.3);
+}
 
-.add-maintenance { 
-  background: linear-gradient(135deg, #6c5ce7, #5b4fcf);
+.add-tambahmaintenance { 
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
   color: white;
 }
-.add-maintenance:hover { background: linear-gradient(135deg, #5b4fcf, #4a43b8); }
-
-.generate { 
+.add-tambahmaintenance:hover { 
+  background: linear-gradient(135deg, #7c3aed, #6d28d9);
+  box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+}
+.add-jadwalulangmaintenance { 
   background: linear-gradient(135deg, #3498db, #2980b9);
   color: white;
 }
-.generate:hover { background: linear-gradient(135deg, #2980b9, #21618c); }
+.add-jadwalulangemaintenance:hover { 
+   background: linear-gradient(135deg, #2980b9, #21618c);
+  box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+}
+.add-cancelpemasangan { 
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  color: white;
+}
+.add-cancelpemasangan:hover { 
+  background: linear-gradient(135deg, #c0392b, #a93226);
+  box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4);
+}
+.generate { 
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+}
+.generate:hover { 
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+}
 
 .wa { 
   background: linear-gradient(135deg, #25d366, #128c7e);
   color: white;
 }
-.wa:hover { background: linear-gradient(135deg, #128c7e, #0d6e5f); }
+.wa:hover { 
+  background: linear-gradient(135deg, #128c7e, #0d6e5f);
+  box-shadow: 0 8px 25px rgba(37, 211, 102, 0.3);
+}
 
 .reset { 
-  background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+  background: linear-gradient(135deg, #6b7280, #4b5563);
   color: white;
 }
-.reset:hover { background: linear-gradient(135deg, #7f8c8d, #6c7b7d); }
+.reset:hover { 
+  background: linear-gradient(135deg, #4b5563, #374151);
+  box-shadow: 0 8px 25px rgba(107, 114, 128, 0.3);
+}
 
-/* **FIX:** Repositioned and restyled the delete button */
+/* STYLE DELETE BUTTON YANG DIPERBAIKI */
 .delete { 
-  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  background: linear-gradient(135deg, #ef4444, #dc2626);
   color: white;
-  margin-top: 20px; /* Add space above the button */
-  width: 100%; /* Make it full width */
-  flex: none; /* Override flex property from general button style */
+  margin-top: 20px;
+  width: 100%;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .delete:hover { 
-  background: linear-gradient(135deg, #c0392b, #a93226); 
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  box-shadow: 0 8px 25px rgba(239, 68, 68, 0.3);
 }
 
-pre {
-  background: #f8f9fa;
-  padding: 20px;
-  border-radius: 10px;
-  white-space: pre-wrap;
-  word-wrap: break-word; /* Ensure long text wraps */
-  margin-top: 25px;
-  border: 2px solid #e9ecef;
-  font-family: 'Consolas', 'Monaco', monospace;
-  font-size: 13px;
-  line-height: 1.4;
-}
-
+/* STYLE UNTUK FORM YANG DIPERBAIKI */
 .header-input, .form { 
   background: #fff;
-  padding: 20px;
+  padding: 25px;
   border: 2px solid #e9ecef;
-  border-radius: 12px;
-  margin-bottom: 20px;
-  position: relative; /* Keep for child positioning if needed later */
+  border-radius: 15px;
+  margin-bottom: 25px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.form:hover {
+  border-color: #3498db;
+  box-shadow: 0 5px 20px rgba(52, 152, 219, 0.1);
 }
 
 .form-header {
   background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-  padding: 15px;
-  margin: -20px -20px 20px -20px;
-  border-radius: 12px 12px 0 0;
+  padding: 18px 25px;
+  margin: -25px -25px 25px -25px;
+  border-radius: 15px 15px 0 0;
   border-bottom: 2px solid #dee2e6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .form-header h3 {
   margin: 0;
   color: #2c3e50;
   font-size: 18px;
+  font-weight: 600;
+}
+
+/* TOMBOL DELETE FORM YANG BAGUS */
+.delete-form {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s ease;
+  min-width: auto;
+}
+
+.delete-form:hover {
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+}
+
+.delete-form .btn-icon {
+  margin-right: 0;
+  font-size: 12px;
 }
 
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 15px;
+  gap: 20px;
 }
 
 .search-container {
@@ -191,10 +311,10 @@ pre {
 }
 
 .search-result-item {
-  padding: 10px;
+  padding: 12px;
   cursor: pointer;
   border-bottom: 1px solid #ecf0f1;
-  transition: background 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .search-result-item:hover {
@@ -209,34 +329,303 @@ pre {
 .date-display {
   background: linear-gradient(135deg, #34495e, #2c3e50);
   color: white;
-  padding: 15px;
-  border-radius: 10px;
+  padding: 18px;
+  border-radius: 12px;
   text-align: center;
   font-weight: 600;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   font-size: 16px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
-@media (max-width: 600px) {
+pre {
+  background: #f8f9fa;
+  padding: 25px;
+  border-radius: 12px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  margin-top: 30px;
+  border: 2px solid #e9ecef;
+  font-family: 'Consolas', 'Monaco', monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  transition: all 0.3s ease;
+}
+
+pre:hover {
+  border-color: #3498db;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+    margin: 15px;
+    border-radius: 16px;
+  }
+  
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .btn-group {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  button {
+    width: 100%;
+    min-width: auto;
+    padding: 12px 18px;
+  }
+  
+  h2 {
+    font-size: 26px;
+  }
+  
+  .btn-icon {
+    margin-right: 8px;
+    font-size: 14px;
+  }
+  
+  .header-input, .form {
+    padding: 20px;
+  }
+  
+  .form-header {
+    padding: 15px 20px;
+    margin: -20px -20px 20px -20px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 10px;
+  }
+  
   .container {
     padding: 15px;
     margin: 10px;
   }
   
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .btn-group {
-    flex-direction: column;
-  }
-  
   button {
-    width: 100%;
+    padding: 10px 15px;
+    font-size: 13px;
+  }
+  
+  .btn-icon {
+    margin-right: 6px;
+    font-size: 13px;
   }
   
   h2 {
     font-size: 24px;
   }
- }
- 
+  
+  input, select, textarea {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .toggle-sn-btn {
+    transition: all 0.3s ease;
+}
+
+.toggle-sn-btn:hover {
+    background: #e0e0e0 !important;
+}
+
+.sn-form {
+    padding: 10px;
+    border: 1px dashed #ccc;
+    border-radius: 4px;
+    background: #f9f9f9;
+    margin: 10px 0;
+}
+.toggle-btn {
+    transition: all 0.3s ease;
+    width: 100%;
+    font-size: 14px;
+}
+
+.toggle-btn:hover {
+    background: #e0e0e0 !important;
+}
+
+.toggle-form {
+    padding: 15px;
+    border: 1px dashed #ccc;
+    border-radius: 6px;
+    background: #f9f9f9;
+    margin: 10px 0;
+}
+
+.search-container {
+    margin-top: 10px;
+}
+/* Opsi 1: Label sederhana */
+.optional-label {
+  color: #666;
+  font-size: 0.8em;
+  font-style: italic;
+  font-weight: normal;
+}
+
+/* Opsi 2: Dengan icon dan warna */
+.optional-label {
+  color: #888;
+  font-size: 0.75em;
+  font-weight: normal;
+}
+
+.optional-label i {
+  margin-right: 4px;
+  color: #888;
+}
+
+.optional-field {
+  border-left: 3px solid #e0e0e0;
+}
+
+/* Opsi 3: Badge dengan background */
+.optional-badge {
+  background: #f0f0f0;
+  color: #666;
+  font-size: 0.7em;
+  padding: 2px 6px;
+  border-radius: 10px;
+  margin-left: 5px;
+  font-weight: normal;
+}
+
+.optional-input {
+  border: 1px dashed #ccc;
+  background: #fafafa;
+}
+
+.optional-input:focus {
+  border: 1px dashed #007bff;
+  background: #fff;
+}
+/* Label abu-abu + border kiri */
+.optional-label {
+  color: #6b7280;
+  font-size: 0.8em;
+  font-style: italic;
+}
+
+.optional-field {
+  border-left: 3px solid #d1d5db;
+  background: #f9fafb;
+  transition: all 0.2s ease;
+}
+
+.optional-field:focus {
+  border-left: 3px solid #3b82f6;
+  background: white;
+}
+.optional-label {
+  color: #6b7280;
+  font-size: 0.8em;
+  font-style: italic;
+}
+
+.optional-label i {
+  margin-right: 4px;
+  color: #9ca3af;
+  font-size: 0.9em;
+}
+
+/* Untuk icon info circle dengan warna biru muted */
+.optional-label .fa-info-circle {
+  color: #60a5fa;
+}
+
+/* Untuk icon dengan warna abu-abu */
+.optional-label .fa-circle-info {
+  color: #9ca3af;
+}
+/* WAJIB DIISI */
+.required-label {
+  color: #dc2626;
+  font-weight: bold;
+}
+
+/* OPSIONAL */
+.optional-label {
+  color: #6b7280;
+  font-size: 0.8em;
+  font-style: italic;
+}
+
+.optional-label i {
+  margin-right: 4px;
+  color: #9ca3af;
+  font-size: 0.9em;
+}
+
+/* Form Group */
+.form-group {
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+/* Form Controls */
+.form-control {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  outline: none;
+}
+
+/* Error States */
+.form-control.error {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.25);
+}
+
+.form-control.valid {
+  border-color: #28a745;
+  box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.25);
+}
+
+/* Error Messages */
+.error-message {
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 4px;
+  display: none;
+}
+
+.error-message.show {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Required Label */
+.required-label {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+/* Optional Label */
+.optional-label {
+  color: #6c757d;
+  font-size: 0.8em;
+  font-style: italic;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+}

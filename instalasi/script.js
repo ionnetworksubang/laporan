@@ -117,8 +117,165 @@ const odpData = [
   "PAGADEN 3","PAGADEN 4","PEJUANG DALAM","POS 3","EPUL",
   "REDOORZ","KENANGA 2","TAMBAKDAHAN 1","TAMBAKDAHAN 2","TAMBAKDAHAN 3",
   "TAMBAKDAHAN 4","TAMBAKDAHAN 5","TAMBAKDAHAN 6","TAMBAKDAHAN 7",
-  "DUREN MURAG","SAMS","LOLONG",
+  "DUREN MURAG","SAMS","LOLONG","PERTIGAAN MARJAN","KALIANGSANA 1","KALIANGSANA 2",
+  "KALIANGSANA 3","TAMBAKDAHAN 10","BSR 10","JERUK 2","SAMES","TAMBAKDAHAN 11",
+  "TAMBAKDAHAN 8","TAMBAKDAHAN 9","KALIANGSANA 6","KALIANGSANA 5","KALAIANGSANA 4",
 ]
+
+// Fungsi validasi real-time
+function validateField(input, fieldType) {
+  const value = input.value.trim();
+  const errorElement = document.getElementById(input.id + '-error');
+  
+  // Reset state
+  input.classList.remove('error', 'valid');
+  errorElement.classList.remove('show');
+  
+  // Validasi berdasarkan tipe field
+  if (!value) {
+    let message = '';
+    switch(fieldType) {
+      case 'nama':
+        message = 'Please enter customer name';
+        break;
+      case 'cid':
+        message = 'Please enter CID number';
+        break;
+      case 'kendala':
+        message = 'Please enter the problem';
+        break;
+      case 'tindakan':
+        message = 'Please enter the solution';
+        break;
+      default:
+        message = 'This field is required';
+    }
+    
+    showError(input, errorElement, message);
+    return false;
+  }
+  
+  // Validasi khusus untuk CID (harus angka)
+  if (fieldType === 'cid' && isNaN(value)) {
+    showError(input, errorElement, 'Please enter a valid CID number');
+    return false;
+  }
+  
+  // Jika valid
+  input.classList.add('valid');
+  return true;
+}
+
+// Fungsi tampilkan error
+function showError(input, errorElement, message) {
+  input.classList.add('error');
+  errorElement.textContent = message;
+  errorElement.classList.add('show');
+}
+
+// Fungsi validasi semua field sebelum generate
+function validateMaintenanceForm(i) {
+  const fields = [
+    { id: 'nama'+i, type: 'nama' },
+    { id: 'cid'+i, type: 'cid' },
+    { id: 'ken'+i, type: 'kendala' },
+    { id: 'tin'+i, type: 'tindakan' }
+  ];
+  
+  let isValid = true;
+  
+  fields.forEach(field => {
+    const input = document.getElementById(field.id);
+    if (!validateField(input, field.type)) {
+      isValid = false;
+    }
+  });
+  
+  return isValid;
+}
+
+// Fungsi validasi hanya untuk field wajib maintenance
+function validateMaintenanceForm(i) {
+  const requiredFields = [
+    { id: 'nama'+i, type: 'nama' },
+    { id: 'cid'+i, type: 'cid' },
+    { id: 'ken'+i, type: 'kendala' },
+    { id: 'tin'+i, type: 'tindakan' }
+  ];
+  
+  let firstErrorField = null;
+  let isValid = true;
+  
+  requiredFields.forEach(field => {
+    const input = document.getElementById(field.id);
+    if (!validateField(input, field.type)) {
+      isValid = false;
+      // Simpan field error pertama untuk focus
+      if (!firstErrorField) {
+        firstErrorField = input;
+      }
+    }
+  });
+  
+  // Focus ke field error pertama
+  if (firstErrorField) {
+    firstErrorField.focus();
+    firstErrorField.scrollIntoView({ 
+      behavior: 'smooth', 
+      block: 'center' 
+    });
+  }
+  
+  return isValid;
+}
+
+// Fungsi untuk menampilkan/menyembunyikan form SN
+function toggleSNForm(id) {
+    const snForm = document.getElementById(`snForm${id}`);
+    const toggleBtn = document.querySelector(`[onclick="toggleSNForm(${id})"]`);
+    
+    if (snForm.style.display === 'none') {
+        snForm.style.display = 'block';
+        toggleBtn.innerHTML = '<i class="fas fa-times"></i> Sembunyikan Form SN';
+        toggleBtn.style.background = '#e0e0e0';
+    } else {
+        snForm.style.display = 'none';
+        toggleBtn.innerHTML = '<i class="fas fa-exchange-alt"></i> Ganti Perangkat';
+        toggleBtn.style.background = '#f0f0f0';
+    }
+}
+
+// Fungsi untuk menampilkan/menyembunyikan form Pindah ODP
+function toggleODPForm(id) {
+    const odpForm = document.getElementById(`odpForm${id}`);
+    const toggleBtn = document.querySelector(`[onclick="toggleODPForm(${id})"]`);
+    
+    if (odpForm.style.display === 'none') {
+        odpForm.style.display = 'block';
+        toggleBtn.innerHTML = '<i class="fas fa-times"></i> Sembunyikan Form ODP';
+        toggleBtn.style.background = '#e0e0e0';
+    } else {
+        odpForm.style.display = 'none';
+        toggleBtn.innerHTML = '<i class="fas fa-arrows-alt-h"></i> Pindah ODP';
+        toggleBtn.style.background = '#f0f0f0';
+    }
+}
+
+// Fungsi untuk menampilkan/menyembunyikan form Pindah ODP
+function toggleODPForm(id) {
+    const odpForm = document.getElementById(`odpForm${id}`);
+    const toggleBtn = document.querySelector(`[onclick="toggleODPForm(${id})"]`);
+    
+    if (odpForm.style.display === 'none') {
+        odpForm.style.display = 'block';
+        toggleBtn.innerHTML = '<i class="fas fa-times"></i> Sembunyikan Form ODP';
+        toggleBtn.style.background = '#e0e0e0';
+    } else {
+        odpForm.style.display = 'none';
+        toggleBtn.innerHTML = '<i class="fas fa-arrows-alt-h"></i> Pindah ODP';
+        toggleBtn.style.background = '#f0f0f0';
+    }
+}
 
 // Fungsi untuk update tanggal (hanya hari, tanggal, bulan, tahun)
 function updateDate() {
@@ -157,25 +314,25 @@ function getDefaultDate() {
 }
 
 const formTemplates = {
-  instalasi: `
+  tambahinstalasi: `
     <div class="form-header">
       <h3>INSTALASI</h3>
     </div>
     <input type="hidden" id="jenis{id}" value="Instalasi">
     
-    <label for="nama{id}">Nama</label>
+    <label for="nama{id}">Nama <span class="required-label">*</span></label>
     <input type="text" id="nama{id}" placeholder="Nama pelanggan">
     
-    <label for="cid{id}">CID</label>
+    <label for="cid{id}">CID <span class="required-label">*</span></label>
     <input type="number" id="cid{id}" inputmode="numeric" placeholder="Nomor CID">
     
     <label for="email{id}">Email</label>
     <input type="email" id="email{id}" placeholder="Email pelanggan">
     
-    <label for="olt{id}">OLT</label>
+    <label for="olt{id}">OLT <span class="required-label">*</span></label>
     <select id="olt{id}">
       <option value="">-- Pilih OLT --</option>
-      <option value="OFFICE SUBANG RAISECOM">OFFICE SUBANG RAISECOM</option>
+      <option value="OFFICE SUBANG 1">OFFICE SUBANG RAISECOM</option>
       <option value="TAMBAKDAHAN SUBANG">TAMBAKDAHAN SUBANG</option>
       <option value="PEGADEN SUBANG">PEGADEN SUBANG</option>
       <option value="DAWUAN">DAWUAN</option>
@@ -186,12 +343,12 @@ const formTemplates = {
     
     <div class="form-grid">
       <div class="search-container">
-        <label for="odp{id}">ODP</label>
+        <label for="odp{id}">ODP <span class="required-label">*</span></label>
         <input type="text" id="odp{id}" placeholder="Ketik untuk mencari ODP" oninput="searchODP(this, 'odpResults{id}')">
         <div class="search-results" id="odpResults{id}"></div>
       </div>
       <div>
-        <label for="port{id}">Port</label>
+        <label for="port{id}">Port <span class="required-label">*</span></label>
         <select id="port{id}">
           <option value="">-- Pilih Port --</option>
           ${Array.from({length: 16}, (_, i) => `<option value="${i + 1}">Port ${i + 1}</option>`).join('')}
@@ -199,7 +356,7 @@ const formTemplates = {
       </div>
     </div>
     
-    <label for="jenis_perangkat{id}">Jenis Perangkat</label>
+    <label for="jenis_perangkat{id}">Jenis Perangkat <span class="required-label">*</span></label>
 <select id="jenis_perangkat{id}" onchange="updateSN('{id}')">
   <option value="">-- Pilih --</option>
   <option value="C-DATA XPON ONU">C-DATA XPON ONU</option>
@@ -210,13 +367,13 @@ const formTemplates = {
   <option value="C-DATA XPON ONU (DISMANTLE)">C-DATA XPON ONU (DISMANTLE)</option>
 </select>
 
-<label for="sn_perangkat{id}">SN Perangkat</label>
+<label for="sn_perangkat{id}">SN Perangkat <span class="required-label">*</span></label>
 <input type="text" id="sn_perangkat{id}" placeholder="Serial number perangkat">
 
     
     <div class="form-grid">
       <div>
-        <label for="dropcore{id}">Dropcore</label>
+        <label for="dropcore{id}">Dropcore <span class="required-label">*</span></label>
         <select id="dropcore{id}">
           <option value="">Pilih panjang</option>
           <option value="50 Meter">50 Meter</option>
@@ -231,7 +388,7 @@ const formTemplates = {
         </select>
       </div>
       <div>
-        <label for="patchcord{id}">Patchcord</label>
+        <label for="patchcord{id}">Patchcord <span class="required-label">*</span></label>
         <select id="patchcord{id}">
           <option value="">Pilih jumlah</option>
           <option value="1 Pcs" selected>1 Pcs</option>
@@ -241,45 +398,237 @@ const formTemplates = {
       </div>
     </div>
     
-    <label for="keterangan{id}">Keterangan</label>
+    <label for="keterangan{id}">Keterangan <span class="required-label">*</span></label>
     <input type="text" id="keterangan{id}" value="Selesai">
   `,
   
-  reschedule: `
+  jadwalulanginstalasi: `
     <div class="form-header">
-      <h3>Reschedule</h3>
+      <h3>Jadwal Ulang Instalasi</h3>
     </div>
-    <input type="hidden" id="jenis{id}" value="Reschedule">
-    <label for="nama{id}">Nama Pelanggan</label>
+    <input type="hidden" id="jenis{id}" value="Jadwal Ulang Instalasi">
+    <label for="nama{id}">Nama Pelanggan <span class="required-label">*</span></label>
     <input type="text" id="nama{id}" placeholder="Nama pelanggan (Wajib diisi)">
 
-     <label for="cid{id}">CID</label>
-    <input type="number" id="cid{id}" inputmode="numeric" placeholder="Nomor CID (Wajib diisi)">
+     
     <label for="alasan{id}">Alasan Reschedule</label>
     <select id="alasan{id}">
       <option value="">Pilih Alasan</option>
-      <option value="Reschedule">Reschedule</option>
-      <option value="Tidak ada orang di rumah">Tidak ada orang di rumah</option>
+      <option value="Pelanggan minta di jawalkan ulang">Pelanggan minta di jawalkan ulang</option>
+      <option value="Pelanggan minta di ulang besok">Pelanggan minta di jadwal ulang besok</option>
+      <option value="Pelanggan minta di ulang minggu depan">Pelanggan minta di jadwal ulang minggu depan</option>
+      <option value="Pelanggan minta di ulang bulan depan">Pelanggan minta di jadwal ulang bulan depan</option>
+      <option value="Pelanggan tidak ada di rumah">Pelanggan tidak ada di rumah</option>
+      <option value="Pelanggan sedang sakit">Pelanggan sedang sakit</option>
+      <option value="Pelanggan pindah alamat">Pelanggan pindah alamat</option>
+      <option value="Pelanggan tidak bisa dihubungi">Pelanggan tidak bisa dihubungi</option>
+      <option value="Pelanggan sedang bepergian">Pelanggan sedang bepergian</option>
+      <option value="Instalasi ditunda karena pelanggan belum siap secara biaya">Instalasi ditunda karena pelanggan belum siap secara biaya</option>      
       <option value="Kendala listrik">Kendala listrik</option>
       <option value="Jarak terlalu jauh, menunggu pengembangan ODP">Jarak terlalu jauh, menunggu pengembangan ODP</option>
-      <option value="Hujan deras / cuaca buruk">Hujan deras / cuaca buruk</option>
+      <option value="Cuaca buruk">Cuaca buruk</option>
       <option value="Pemasangan malam hari sudah terlalu larut">Pemasangan malam hari sudah terlalu larut</option>
       <option value="Perlu izin RT/RW">Perlu izin RT/RW</option>
       <option value="ODP penuh, menunggu pengembangan ODP">ODP penuh, menunggu pegembagan ODP</option>
-      <option value="Pemilik rumah sedang kerja / sibuk">Pemilik rumah sedang kerja / sibuk</option>
+      <option value="Pelanggan sedang bekerja atau sibuk,">Pemilik rumah sedang kerja atau sibuk</option>
       <option value="Lainnya">Lainnya</option>
     </select>
     
-    <label for="keterangan{id}">Keterangan Tambahan</label>
-    <textarea id="keterangan{id}" placeholder="Penjelasan detail (opsional)" rows="2"></textarea>
+    <label for="keterangan{id}">Keterangan Tambahan <span class="optional-label">
+    <i class="fas fa-info-circle"></i> tidak wajib</label>
+    <textarea id="keterangan{id}" placeholder="Penjelasan detail (tidak wajib di isi)" rows="2"></textarea>
     
+    <label for="jadwal{id}">Tanggal Request <span class="required-label">*</span></label>
+    <input type="date" id="jadwal{id}">
+  `,
+
+ tambahmaintenance: `
+    <div class="form-header">
+      <h3>Maintenance</h3>
+    </div>
+    <input type="hidden" id="jenis{id}" value="Maintenance">
+
+     <!-- NAMA PELANGGAN -->
+    <div class="form-group">
+      <label for="nama{id}">Nama Pelanggan <span class="required-label">*</span></label>
+      <input type="text" id="nama{id}" class="form-control required" 
+             placeholder="Nama pelanggan" 
+             onblur="validateField(this, 'nama')">
+      <div class="error-message" id="nama{id}-error"></div>
+    </div>
+
+    <!-- CID -->
+    <div class="form-group">
+      <label for="cid{id}">CID <span class="required-label">*</span></label>
+      <input type="number" id="cid{id}" class="form-control required" 
+             placeholder="Nomor CID" 
+             onblur="validateField(this, 'cid')">
+      <div class="error-message" id="cid{id}-error"></div>
+    </div>
+
+
+    <div class="search-container">
+        <label for="odp{id}">ODP <span class="optional-label">
+    <i class="fas fa-info-circle"></i> tidak wajib</label>
+        <input type="text" id="odp{id}" placeholder="Ketik untuk mencari ODP" 
+        oninput="searchODP(this, 'odpResults{id}', odpData)">
+        <div class="search-results" id="odpResults{id}"></div>
+    </div>
+
+    <label for="rodp{id}">R. ODP <span class="optional-label">
+    <i class="fas fa-info-circle"></i> tidak wajib</label></label>
+    <input type="text" id="rodp{id}" placeholder="Redaman ODP">
+
+    <div class="form-grid">
+      <div>
+        <label for="rcbefore{id}">R.C Before <span class="optional-label">
+    <i class="fas fa-info-circle"></i> tidak wajib</label></label>
+        <input type="text" id="rcbefore{id}" placeholder="Redaman odp sebelum">
+      </div>
+      <div>
+        <label for="rcafter{id}">R.C After <span class="optional-label">
+    <i class="fas fa-info-circle"></i> tidak wajib</label></label>
+        <input type="text" id="rcafter{id}" placeholder="Redaman odp sesudah">
+      </div>
+    </div>
+
+     <!-- KENDALA -->
+    <div class="form-group">
+      <label for="ken{id}">Kendala <span class="required-label">*</span></label>
+      <input type="text" id="ken{id}" class="form-control required" 
+             placeholder="Masalah yang ditemukan" 
+             onblur="validateField(this, 'kendala')">
+      <div class="error-message" id="ken{id}-error"></div>
+    </div>
+
+    <!-- TINDAKAN -->
+    <div class="form-group">
+      <label for="tin{id}">Tindakan <span class="required-label">*</span></label>
+      <input type="text" id="tin{id}" class="form-control required" 
+             placeholder="Tindakan perbaikan" 
+             onblur="validateField(this, 'tindakan')">
+      <div class="error-message" id="tin{id}-error"></div>
+    </div>
+
+   <!-- Tombol Ganti Perangkat -->
+    <button type="button" class="toggle-btn" onclick="toggleSNForm({id})" style="margin: 10px 0; padding: 8px 12px; background: #f0f0f0; border: 1px solid #ccc; border-radius: 4px; cursor: pointer;">
+      <i class="fas fa-exchange-alt"></i> Ganti Perangkat
+    </button>
+
+    <!-- Form SN (Awalnya Disembunyikan) -->
+    <div id="snForm{id}" class="toggle-form" style="display: none;">
+      <div class="form-grid">
+        <div>
+          <label for="snlama{id}">SN Lama</label>
+          <input type="text" id="snlama{id}" placeholder="Serial number lama">
+        </div>
+        <div>
+          <label for="snbaru{id}">SN Baru</label>
+          <input type="text" id="snbaru{id}" placeholder="Serial number baru">
+        </div>
+      </div>
+    </div>
+
+     <!-- Tombol Pindah ODP -->
+    <button type="button" class="toggle-btn" onclick="toggleODPForm({id})" style="margin: 10px 0; padding: 8px 12px; background: #f0f0f0; border: 1px solid #ccc; border-radius: 4px; cursor: pointer;">
+      <i class="fas fa-arrows-alt-h"></i> Pindah ODP
+    </button>
+
+    <!-- Form Pindah ODP (Awalnya Disembunyikan) -->
+    <div id="odpForm{id}" class="toggle-form" style="display: none;">
+      <!-- ODP Lama dengan Search -->
+      <div class="search-container">
+          <label for="odplama{id}">ODP Lama</label>
+          <input type="text" id="odplama{id}" placeholder="Ketik untuk mencari ODP lama" 
+          oninput="searchODP(this, 'odplamaResults{id}', odpData)">
+          <div class="search-results" id="odplamaResults{id}"></div>
+      </div>
+
+      <!-- ODP Baru dengan Search -->
+      <div class="search-container">
+          <label for="odpbaru{id}">ODP Baru</label>
+          <input type="text" id="odpbaru{id}" placeholder="Ketik untuk mencari ODP baru" 
+          oninput="searchODP(this, 'odpbaruResults{id}', odpData)">
+          <div class="search-results" id="odpbaruResults{id}"></div>
+      </div>
+    </div>
+    <div class="form-grid">
+  <div>
+    <label for="dropcore{id}">Dropcore <span class="optional-label">
+    <i class="fas fa-info-circle"></i> tidak wajib</label></label>
+    <select id="dropcore{id}" class="optional-field">
+      <option value="">Pilih panjang</option>
+      <option value="10 Meter">10 Meter</option>
+      <option value="20 Meter">20 Meter</option>
+      <option value="25 Meter">25 Meter</option>
+      <option value="30 Meter">30 Meter</option>
+      <option value="40 Meter">40 Meter</option>
+      <option value="50 Meter">50 Meter</option>
+      <option value="60 Meter">60 Meter</option>
+      <option value="70 Meter">70 Meter</option>
+      <option value="75 Meter">75 Meter</option>
+      <option value="80 Meter">80 Meter</option>
+      <option value="90 Meter">90 Meter</option>
+      <option value="100 Meter">100 Meter</option>
+       <option value="110 Meter">110 Meter</option>
+        <option value="120 Meter">120 Meter</option>
+         <option value="130 Meter">130 Meter</option>
+          <option value="140 Meter">140 Meter</option>
+           <option value="150 Meter">150 Meter</option>
+            <option value="160 Meter">160 Meter</option>
+             <option value="170 Meter">170 Meter</option>
+              <option value="180 Meter">180 Meter</option>
+               <option value="190 Meter">190 Meter</option>
+                <option value="200 Meter">200 Meter</option>
+
+      <!-- ... -->
+    </select>
+  </div>
+  <div>
+    <label for="patchcord{id}">Patchcord <span class="optional-label">
+    <i class="fas fa-info-circle"></i> tidak wajib</label></label>
+    <select id="patchcord{id}" class="optional-field">
+      <option value="">Pilih jumlah</option>
+      <option value="1 Pcs">1 Pcs</option>
+      <option value="2 Pcs">2 Pcs</option>
+      <option value="3 Pcs">3 Pcs</option>
+    </select>
+  </div>
+</div>
+
+<label for="ket{id}">Keterangan <span class="required-label">*</span></label>
+    <input type="text" id="ket{id}" value="Selesai">
+`,
+
+  jadwalulangmaintenance: `
+    <div class="form-header">
+      <h3>Jadwal Ulang Maintenance</h3>
+    </div>
+    <input type="hidden" id="jenis{id}" value="Jadwal Ulang Maintenance">
+    <label for="nama{id}">Nama Pelanggan</label>
+    <input type="text" id="nama{id}" placeholder="Nama pelanggan (Wajib diisi)">
+    <label for="alasan{id}">Alasan Jadwal Ulang Maintenance </label>
+    <select id="alasan{id}">
+      <option value="">Pilih Alasan</option>
+      <option value="Cuaca Buruk">Cuaca buruk</option>
+      <option value="Pelanggan tidak ada di rumah">Pelanggan tidak ada di rumah</option>
+      <option value="Pelanggan minta di jawalkan ulang">Pelanggan minta di jawalkan ulang</option>
+      <option value="Pelanggan minta di jawalkan ulang besok">Pelanggan minta di jawalkan ulang besok</option>
+      <option value="Maintenance malam hari sudah terlalu larut">Maintenance malam hari sudah terlalu larut</option>
+      <option value="Lainnya">Lainnya</option>
+    </select>
+    
+    <label for="keterangan{id}">Keterangan Tambahan <span class="optional-label">
+    <i class="fas fa-info-circle"></i> tidak wajib</label>
+    <textarea id="keterangan{id}" placeholder="Penjelasan detail (tidak wajib di isi)" rows="2"></textarea>
+
     <label for="jadwal{id}">Tanggal Request (Wajib diisi)</label>
     <input type="date" id="jadwal{id}">
   `,
   
-  cancel: `
+  cancelpemasangan: `
     <div class="form-header">
-      <h3>Reschedule</h3>
+      <h3>Cancel Pemasangan</h3>
     </div>
     <input type="hidden" id="jenis{id}" value="Cancel">
     <label for="nama{id}">Nama Pelanggan</label>
@@ -304,73 +653,7 @@ const formTemplates = {
     <label for="keterangan{id}">Keterangan Tambahan</label>
     <textarea id="keterangan{id}" placeholder="Penjelasan detail (opsional)" rows="2"></textarea>
   `,
-
-  maintenance: `
-    <div class="form-header">
-      <h3>Maintenance</h3>
-    </div>
-    <input type="hidden" id="jenis{id}" value="Maintenance">
-
-    <label for="nama{id}">Nama Pelanggan</label>
-    <input type="text" id="nama{id}" placeholder="Nama pelanggan (Wajib diisi)">
-
-    <label for="cid{id}">CID</label>
-    <input type="number" id="cid{id}" inputmode="numeric" placeholder="Nomor CID (Wajib diisi)">
-    
-    <div class="search-container">
-            <label for="odp{id}">ODP</label>
-            <input type="text" id="odp{id}" placeholder="Ketik untuk mencari ODP (opsional)" 
-            oninput="searchODP(this, 'odpResults{id}', odpData)">
-            <div class="search-results" id="odpResults{id}"></div>
-    </div>
-
-    <label for="rodp{id}">R. ODP</label>
-    <input type="text" id="rodp{id}" placeholder="Redaman ODP (opsional)">
-
-    <div class="form-grid">
-      <div>
-        <label for="rcbefore{id}">R.C Before</label>
-        <input type="text" id="rcbefore{id}" placeholder="Redaman odp sebelum (opsional)">
-      </div>
-      <div>
-        <label for="rcafter{id}">R.C After</label>
-        <input type="text" id="rcafter{id}" placeholder="Redaman odp sesudah (opsional)">
-      </div>
-    </div>
-
-    <label for="ken{id}">Kendala</label>
-    <input type="text" id="ken{id}" placeholder="Masalah yang ditemukan (opsional)">
-
-    <label for="tin{id}">Tindakan</label>
-    <input type="text" id="tin{id}" placeholder="Tindakan perbaikan (opsional)">
-
-    <div class="form-grid">
-      <div>
-        <label for="snlama{id}">SN Lama</label>
-        <input type="text" id="snlama{id}" placeholder="Serial number lama (opsional)">
-      </div>
-      <div>
-        <label for="snbaru{id}">SN Baru</label>
-        <input type="text" id="snbaru{id}" placeholder="Serial number baru (opsional)">
-      </div>
-    </div>
-
-    <div class="form-grid">
-      <div>
-        <label for="dropcore{id}">Dropcore</label>
-        <input type="text" id="dropcore{id}" placeholder="Panjang dropcore (opsional)">
-      </div>
-      <div>
-        <label for="patchcord{id}">Patchcord</label>
-        <input type="text" id="patchcord{id}" placeholder="Jumlah patchcord (opsional)">
-      </div>
-    </div>
-
-    
-
-    <label for="ket{id}">Keterangan</label>
-    <input type="text" id="ket{id}" value="SELESAI">
-  `
+  
 };
 
 // Fungsi pencarian ODP
@@ -507,15 +790,16 @@ function generate() {
   
   let laporan = `${judul}\n${tanggal}\n\n`;
   if (team) {
-    laporan += `*Team : ${team}*\n\n`;
+    laporan += `Team : ${team}\n\n`;
   } else {
     laporan += `\n`;
   }
 
   let instalasiData = [];
-  let rescheduleData = [];
-  let cancelData = [];
+  let jadwalulanginstalasiData = [];
   let maintenanceData = [];
+  let jadwalulangmaintenanceData = [];
+  let cancelData = [];
   
   let isLaporanValid = true; // Flag untuk validasi
 
@@ -524,15 +808,17 @@ function generate() {
     let jenis = getValue("jenis"+i);
     
     if (jenis === "Instalasi") instalasiData.push({ id: i });
-    else if (jenis === "Reschedule") rescheduleData.push({ id: i });
-    else if (jenis === "Cancel") cancelData.push({ id: i });
+    else if (jenis === "Jadwal Ulang Instalasi") jadwalulanginstalasiData.push({ id: i });
     else if (jenis === "Maintenance") maintenanceData.push({ id: i });
+    else if (jenis === "Jadwal Ulang Maintenance") jadwalulangmaintenanceData.push({ id: i});
+    else if (jenis === "Cancel") cancelData.push({ id: i });
   });
 
   let nomorInstalasi = 1;
-  let nomorReschedule = 1;
+  let nomorJadwalUlangInstalasi = 1;
   let nomorCancel = 1;
   let nomorMaintenance = 1;
+  let nomorJadwalUlangMaintenance = 1;
 
   if (instalasiData.length > 0) {
     let instalasiLaporan = "";
@@ -560,43 +846,42 @@ function generate() {
     }
   }
 
-  if (rescheduleData.length > 0) {
-    let rescheduleLaporan = "";
+  if (jadwalulanginstalasiData.length > 0) {
+    let jadwalulanginstalasiLaporan = "";
     // Menggunakan for...of loop agar bisa dihentikan di tengah jalan
-    for (const data of rescheduleData) {
+    for (const data of jadwalulanginstalasiData) {
       let i = data.id;
       let nama = getValue("nama"+i);
-      let cid = getValue("cid"+i);
-      if (nama && cid) {
+      
+      if (nama) {
         const jadwal = document.getElementById("jadwal"+i)?.value;
         
         // **VALIDASI:** Cek apakah tanggal sudah diisi
         if (!jadwal) {
-            alert(`Tanggal request wajib diisi untuk Reschedule CID: ${cid}`);
+            alert(`Tanggal request wajib diisi`);
             isLaporanValid = false; // Set flag menjadi tidak valid
             break; // Hentikan loop
         }
 
-         rescheduleLaporan += `${nomorReschedule} .A/N: ${nama}\n`;
-        rescheduleLaporan += `CID: ${cid}\n`;
+        jadwalulanginstalasiLaporan += `${nomorJadwalUlangInstalasi} .A/N: ${nama}\n`;
         
         const alasan = getValue("alasan"+i);
-        if (alasan) rescheduleLaporan += `Alasan: ${alasan}\n`;
+        if (alasan) jadwalulanginstalasiLaporan += `Alasan: ${alasan}\n`;
 
         const keterangan = getValue("keterangan"+i);
-        if (keterangan) rescheduleLaporan += `Keterangan: ${keterangan}\n`;
+        if (keterangan) jadwalulanginstalasiLaporan += `Keterangan: ${keterangan}\n`;
         
         // **DIUBAH:** Menggunakan format tanggal baru dan label baru
-        rescheduleLaporan += `Tanggal request: ${formatFullDate(jadwal)}\n\n`;
+        jadwalulanginstalasiLaporan += `Tanggal request: ${formatFullDate(jadwal)}\n\n`;
         
-        nomorReschedule++;
+        nomorJadwalUlangInstalasi++;
       }
     }
     
     if (!isLaporanValid) return; // Hentikan fungsi jika laporan tidak valid
 
-    if (rescheduleLaporan) {
-        laporan += `*RESCHEDULE*\n\n` + rescheduleLaporan;
+    if (jadwalulanginstalasiLaporan) {
+        laporan += `*RESCHEDULE INSTALASI*\n\n` + jadwalulanginstalasiLaporan;
     }
   }
 
@@ -628,60 +913,129 @@ function generate() {
     if (!isLaporanValid) return; // Hentikan fungsi jika laporan tidak valid
 
     if (cancelLaporan) {
-        laporan += `*CANCEL*\n\n` + cancelLaporan;
+        laporan += `*CANCEL PEMASANGAN*\n\n` + cancelLaporan;
     }
   }
 
   if (maintenanceData.length > 0) {
     let maintenanceLaporan = "";
+    let isMaintenanceValid = true;
+    
     maintenanceData.forEach(data => {
       let i = data.id;
+      
+      // VALIDASI HANYA 4 FIELD WAJIB + AUTO FOCUS
+      if (!validateMaintenanceForm(i)) {
+        isMaintenanceValid = false;
+        return; // Hentikan loop, kursor sudah difocus ke field error
+      }
+      
+      // JIKA VALID, AMBIL DATA
       let cid = getValue("cid"+i);
       let nama = getValue("nama"+i);
-      if (cid && nama) {
-        maintenanceLaporan += `${nomorMaintenance}. A/N : ${nama}\n`;
-        maintenanceLaporan += `CID : ${cid}\n`;
+      let ken = getValue("ken"+i);
+      let tin = getValue("tin"+i);
 
-        const odp = getValue("odp"+i);
-        if (odp) maintenanceLaporan += `ODP : ${odp}\n`;
+      // JIKA SEMUA VALID, BUAT LAPORAN
+      maintenanceLaporan += `${nomorMaintenance}. A/N : ${nama}\n`;
+      maintenanceLaporan += `CID : ${cid}\n`;
 
-        const rodp = getValue("rodp"+i);
-        if (rodp) maintenanceLaporan += `R. ODP : ${rodp}\n`;
-        
-        const rcbefore = getValue("rcbefore"+i);
-        if (rcbefore) maintenanceLaporan += `R.C Before : ${rcbefore}\n`;
-        
-        const rcafter = getValue("rcafter"+i);
-        if (rcafter) maintenanceLaporan += `R.C After : ${rcafter}\n`;
+      const odp = getValue("odp"+i);
+      if (odp) maintenanceLaporan += `ODP : ${odp}\n`;
 
-        const ken = getValue("ken"+i);
-        if (ken) maintenanceLaporan += `Kendala : ${ken}\n`;
+      const rodp = getValue("rodp"+i);
+      if (rodp) maintenanceLaporan += `R. ODP : ${rodp}\n`;
+      
+      const rcbefore = getValue("rcbefore"+i);
+      if (rcbefore) maintenanceLaporan += `R.C Before : ${rcbefore}\n`;
+      
+      const rcafter = getValue("rcafter"+i);
+      if (rcafter) maintenanceLaporan += `R.C After : ${rcafter}\n`;
 
-        const tin = getValue("tin"+i);
-        if (tin) maintenanceLaporan += `Tindakan : ${tin}\n`;
-        
-        const snlama = getValue("snlama"+i);
-        if (snlama) maintenanceLaporan += `SN Lama : ${snlama}\n`;
-        
-        const snbaru = getValue("snbaru"+i);
-        if (snbaru) maintenanceLaporan += `SN Baru : ${snbaru}\n`;
+      // KENDALA & TINDAKAN WAJIB (selalu muncul)
+      maintenanceLaporan += `Kendala : ${ken}\n`;
+      maintenanceLaporan += `Tindakan : ${tin}\n`;
+      
+      const snLama = getValue("snlama"+i);
+      const snBaru = getValue("snbaru"+i);
+      const odplama = getValue("odplama"+i);
+      const odpbaru = getValue("odpbaru"+i);
 
-        const dropcore = getValue("dropcore"+i);
-        if (dropcore) maintenanceLaporan += `Dropcore : ${dropcore}\n`;
-        
-        const patchcord = getValue("patchcord"+i);
-        if (patchcord) maintenanceLaporan += `Patchcord : ${patchcord}\n`;
-
-        const ket = getValue("ket"+i);
-        if (ket) maintenanceLaporan += `Keterangan : ${ket || 'SELESAI'}\n\n`;
-        
-        nomorMaintenance++;
+      if (snLama || snBaru) {
+          maintenanceLaporan += `Ganti Perangkat:\n`;
+          if (snLama) maintenanceLaporan += `SN Lama: ${snLama}\n`;
+          if (snBaru) maintenanceLaporan += `SN Baru: ${snBaru}\n`;
+          maintenanceLaporan += `\n`; // ✅ Tambah baris baru
       }
+
+      // Data Pindah ODP
+      if (odplama || odpbaru) {
+          maintenanceLaporan += `Pindah ODP:\n`;
+          if (odplama) maintenanceLaporan += `ODP Lama: ${odplama}\n`;
+          if (odpbaru) maintenanceLaporan += `ODP Baru: ${odpbaru}\n`;
+          maintenanceLaporan += `\n`; // ✅ Tambah baris baru
+      }
+      
+      const dropcore = getValue("dropcore"+i);
+      if (dropcore && dropcore !== "") maintenanceLaporan += `Dropcore : ${dropcore}\n`;
+      
+      const patchcord = getValue("patchcord"+i);
+      if (patchcord && patchcord !== "") maintenanceLaporan += `Patchcord : ${patchcord}\n`;
+
+      const ket = getValue("ket"+i);
+      if (ket) maintenanceLaporan += `Keterangan : ${ket || 'Selesai'}\n\n`;
+      
+      nomorMaintenance++;
     });
+    
+    // HENTIKAN JIKA VALIDASI GAGAL
+    if (!isMaintenanceValid) return;
+    
     if (maintenanceLaporan) {
-        laporan += `*MAINTENANCE*\n` + maintenanceLaporan;
+        laporan += `*MAINTENANCE*\n\n` + maintenanceLaporan;
+    }
+}
+
+   if (jadwalulangmaintenanceData.length > 0) {
+    let jadwalulangmaintenanceLaporan = "";
+    // Menggunakan for...of loop agar bisa dihentikan di tengah jalan
+    for (const data of jadwalulangmaintenanceData) {
+      let i = data.id;
+      let nama = getValue("nama"+i);
+      
+      if (nama) {
+        const jadwal = document.getElementById("jadwal"+i)?.value;
+        
+        // **VALIDASI:** Cek apakah tanggal sudah diisi
+        if (!jadwal) {
+            alert(`Tanggal request wajib diisi`);
+            isLaporanValid = false; // Set flag menjadi tidak valid
+            break; // Hentikan loop
+        }
+
+        jadwalulangmaintenanceLaporan += `${nomorJadwalUlangMaintenance} .A/N: ${nama}\n`;
+        
+        const alasan = getValue("alasan"+i);
+        if (alasan) jadwalulangmaintenanceLaporan += `Alasan: ${alasan}\n`;
+
+        const keterangan = getValue("keterangan"+i);
+        if (keterangan) jadwalulangmaintenanceLaporan += `Keterangan: ${keterangan}\n`;
+        
+        // **DIUBAH:** Menggunakan format tanggal baru dan label baru
+        jadwalulangmaintenanceLaporan += `Tanggal request: ${formatFullDate(jadwal)}\n\n`;
+        
+        nomorJadwalUlangMaintenance++;
+      }
+    }
+    
+    if (!isLaporanValid) return; // Hentikan fungsi jika laporan tidak valid
+
+    if (jadwalulangmaintenanceLaporan) {
+        laporan += `*RESCHEDULE MAINTENANCE*\n\n` + jadwalulangmaintenanceLaporan;
     }
   }
+
+  
 
   document.getElementById("output").innerText = laporan.trim();
 }

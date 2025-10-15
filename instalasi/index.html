@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Laporan Subang</title>
+  <title>Laporan Instalasi Subang</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -34,16 +35,25 @@
     <div id="forms"></div>
 
     <div class="btn-group">
-      <button class="add-instalasi" onclick="addForm('instalasi')"> + Instalasi</button>
-      <button class="add-reschedule" onclick="addForm('reschedule')"> + Reschedule</button>
-      <button class="add-cancel" onclick="addForm('cancel')"> + Cancel</button>
-      <button class="add-maintenance" onclick="addForm('maintenance')"> + Maintenance</button>
+      <button class="add-tambahinstalasi" onclick="addForm('tambahinstalasi')">
+        <i class="fas fa-rocket btn-icon"></i>Tambah Instalasi</button>
+      <button class="add-jadwalulanginstalasi" onclick="addForm('jadwalulanginstalasi')">
+        <i class="fas fa-calendar-alt btn-icon"></i>Jadwal Ulang Instalasi</button>
+      <button class="add-tambahmaintenance" onclick="addForm('tambahmaintenance')">
+        <i class="fas fa-screwdriver-wrench btn-icon"></i>Tambah Maintenance</button>
+      <button class="add-jadwalulangmaintenance" onclick="addForm('jadwalulangmaintenance')">
+         <i class="fas fa-arrows-rotate btn-icon"></i>Jadwal Ulang Maintenance</button>
+      <button class="add-cancelpemasangan" onclick="addForm('cancelpemasangan')">
+          <i class="fas fa-ban btn-icon"></i> Cancel Pemasangan</button>
     </div>
 
     <div class="btn-group">
-      <button class="generate" onclick="generate()">Buat Laporan</button>
-      <button class="wa" onclick="sendWA()">Kirim via WhatsApp</button>
-      <button class="reset" onclick="resetLaporan()">Reset Laporan</button>
+      <button class="generate" onclick="generate()">
+        <i class="fas fa-file-waveform btn-icon"></i>Buat Laporan</button>
+      <button class="wa" onclick="sendWA()">
+        <i class="fab fa-whatsapp btn-icon"></i>Kirim via WhatsApp</button>
+      <button class="reset" onclick="resetLaporan()">
+        <i class="fas fa-arrow-rotate-left btn-icon"></i>Reset Laporan</button>
     </div>
     
     <pre id="output"></pre>
