@@ -114,7 +114,7 @@ const odpData = [
   "BELITUNG","LAPANG SAMPEU","ALFOUR","ATREA","AKIMORA","JACE",
   "KIARA 5","GREEN SUBANG 2","GG.KIARA 4","KHAER","BAPE","PAHER",
   "BSR 7","BSR 6","KABOA","BANG KOMAR","PANGHEGAR","PAGADEN 1","PAGADEN 2",
-  "PAGADEN 3","PAGADEN 4","PEJUANG DALAM","POS 3","EPUL",
+  "PAGADEN 3","PAGADEN 4","ODP PEJUANG DALAM","POS 3","EPUL",
   "REDOORZ","KENANGA 2","TAMBAKDAHAN 1","TAMBAKDAHAN 2","TAMBAKDAHAN 3",
   "TAMBAKDAHAN 4","TAMBAKDAHAN 5","TAMBAKDAHAN 6","TAMBAKDAHAN 7",
   "DUREN MURAG","SAMS","LOLONG","PERTIGAAN MARJAN","KALIANGSANA 1","KALIANGSANA 2",
@@ -320,16 +320,17 @@ const formTemplates = {
     </div>
     <input type="hidden" id="jenis{id}" value="Instalasi">
     
-    <label for="nama{id}">Nama <span class="required-label">*</span></label>
+    <label for="nama{id}">Nama <span class="required-label">* Wajib</span></label>
     <input type="text" id="nama{id}" placeholder="Nama pelanggan">
     
-    <label for="cid{id}">CID <span class="required-label">*</span></label>
+    <label for="cid{id}">CID <span class="required-label">* Wajib</span></label>
     <input type="number" id="cid{id}" inputmode="numeric" placeholder="Nomor CID">
     
-    <label for="email{id}">Email</label>
+    <label for="email{id}">Email <span class="optional-label">
+    <i class="fas fa-info-circle"></i> tidak wajib</span></label>
     <input type="email" id="email{id}" placeholder="Email pelanggan">
     
-    <label for="olt{id}">OLT <span class="required-label">*</span></label>
+    <label for="olt{id}">OLT <span class="required-label">* Wajib</span></label>
     <select id="olt{id}">
       <option value="">-- Pilih OLT --</option>
       <option value="OFFICE SUBANG 1">OFFICE SUBANG RAISECOM</option>
@@ -343,12 +344,12 @@ const formTemplates = {
     
     <div class="form-grid">
       <div class="search-container">
-        <label for="odp{id}">ODP <span class="required-label">*</span></label>
+        <label for="odp{id}">ODP <span class="required-label">* Wajib</span></label>
         <input type="text" id="odp{id}" placeholder="Ketik untuk mencari ODP" oninput="searchODP(this, 'odpResults{id}')">
         <div class="search-results" id="odpResults{id}"></div>
       </div>
       <div>
-        <label for="port{id}">Port <span class="required-label">*</span></label>
+        <label for="port{id}">Port <span class="required-label">* Wajib</span></label>
         <select id="port{id}">
           <option value="">-- Pilih Port --</option>
           ${Array.from({length: 16}, (_, i) => `<option value="${i + 1}">Port ${i + 1}</option>`).join('')}
@@ -356,7 +357,7 @@ const formTemplates = {
       </div>
     </div>
     
-    <label for="jenis_perangkat{id}">Jenis Perangkat <span class="required-label">*</span></label>
+    <label for="jenis_perangkat{id}">Jenis Perangkat <span class="required-label">* Wajib</span></label>
 <select id="jenis_perangkat{id}" onchange="updateSN('{id}')">
   <option value="">-- Pilih --</option>
   <option value="C-DATA XPON ONU">C-DATA XPON ONU</option>
@@ -367,13 +368,13 @@ const formTemplates = {
   <option value="C-DATA XPON ONU (DISMANTLE)">C-DATA XPON ONU (DISMANTLE)</option>
 </select>
 
-<label for="sn_perangkat{id}">SN Perangkat <span class="required-label">*</span></label>
+<label for="sn_perangkat{id}">SN Perangkat <span class="required-label">* Wajib</span></label>
 <input type="text" id="sn_perangkat{id}" placeholder="Serial number perangkat">
 
     
     <div class="form-grid">
       <div>
-        <label for="dropcore{id}">Dropcore <span class="required-label">*</span></label>
+        <label for="dropcore{id}">Dropcore <span class="required-label">* Wajib</span></label>
         <select id="dropcore{id}">
           <option value="">Pilih panjang</option>
           <option value="50 Meter">50 Meter</option>
@@ -388,7 +389,7 @@ const formTemplates = {
         </select>
       </div>
       <div>
-        <label for="patchcord{id}">Patchcord <span class="required-label">*</span></label>
+        <label for="patchcord{id}">Patchcord <span class="required-label">* Wajib</span></label>
         <select id="patchcord{id}">
           <option value="">Pilih jumlah</option>
           <option value="1 Pcs" selected>1 Pcs</option>
@@ -398,7 +399,7 @@ const formTemplates = {
       </div>
     </div>
     
-    <label for="keterangan{id}">Keterangan <span class="required-label">*</span></label>
+    <label for="keterangan{id}">Keterangan <span class="required-label">* Wajib</span></label>
     <input type="text" id="keterangan{id}" value="Selesai">
   `,
   
@@ -411,13 +412,13 @@ const formTemplates = {
     <input type="text" id="nama{id}" placeholder="Nama pelanggan (Wajib diisi)">
 
      
-    <label for="alasan{id}">Alasan Reschedule</label>
+    <label for="alasan{id}">Alasan Reschedule <span class="required-label">*</span></label>
     <select id="alasan{id}">
       <option value="">Pilih Alasan</option>
       <option value="Pelanggan minta di jawalkan ulang">Pelanggan minta di jawalkan ulang</option>
-      <option value="Pelanggan minta di ulang besok">Pelanggan minta di jadwal ulang besok</option>
-      <option value="Pelanggan minta di ulang minggu depan">Pelanggan minta di jadwal ulang minggu depan</option>
-      <option value="Pelanggan minta di ulang bulan depan">Pelanggan minta di jadwal ulang bulan depan</option>
+      <option value="Pelanggan minta di jawalkan ulang besok">Pelanggan minta di jadwalkan ulang besok</option>
+      <option value="Pelanggan minta di jawalkan ulang minggu depan">Pelanggan minta di jadwalkan ulang minggu depan</option>
+      <option value="Pelanggan minta di jawalkan ulang bulan depan">Pelanggan minta di jadwalkan ulang bulan depan</option>
       <option value="Pelanggan tidak ada di rumah">Pelanggan tidak ada di rumah</option>
       <option value="Pelanggan sedang sakit">Pelanggan sedang sakit</option>
       <option value="Pelanggan pindah alamat">Pelanggan pindah alamat</option>
@@ -559,9 +560,11 @@ const formTemplates = {
     <select id="dropcore{id}" class="optional-field">
       <option value="">Pilih panjang</option>
       <option value="10 Meter">10 Meter</option>
+      <option value="15 Meter">15 Meter</option>
       <option value="20 Meter">20 Meter</option>
       <option value="25 Meter">25 Meter</option>
       <option value="30 Meter">30 Meter</option>
+      <option value="35 Meter">35 Meter</option>
       <option value="40 Meter">40 Meter</option>
       <option value="50 Meter">50 Meter</option>
       <option value="60 Meter">60 Meter</option>
@@ -605,9 +608,9 @@ const formTemplates = {
       <h3>Jadwal Ulang Maintenance</h3>
     </div>
     <input type="hidden" id="jenis{id}" value="Jadwal Ulang Maintenance">
-    <label for="nama{id}">Nama Pelanggan</label>
-    <input type="text" id="nama{id}" placeholder="Nama pelanggan (Wajib diisi)">
-    <label for="alasan{id}">Alasan Jadwal Ulang Maintenance </label>
+    <label for="nama{id}">Nama Pelanggan <span class="required-label">*</span></label>
+    <input type="text" id="nama{id}" placeholder="Nama pelanggan">
+    <label for="alasan{id}">Alasan Jadwal Ulang Maintenance <span class="required-label">*</span></label>
     <select id="alasan{id}">
       <option value="">Pilih Alasan</option>
       <option value="Cuaca Buruk">Cuaca buruk</option>
@@ -622,7 +625,7 @@ const formTemplates = {
     <i class="fas fa-info-circle"></i> tidak wajib</label>
     <textarea id="keterangan{id}" placeholder="Penjelasan detail (tidak wajib di isi)" rows="2"></textarea>
 
-    <label for="jadwal{id}">Tanggal Request (Wajib diisi)</label>
+    <label for="jadwal{id}">Tanggal Request <span class="required-label">*</span></label>
     <input type="date" id="jadwal{id}">
   `,
   
@@ -634,8 +637,7 @@ const formTemplates = {
     <label for="nama{id}">Nama Pelanggan</label>
     <input type="text" id="nama{id}" placeholder="Nama pelanggan (Wajib diisi)">
 
-     <label for="cid{id}">CID</label>
-    <input type="number" id="cid{id}" inputmode="numeric" placeholder="Nomor CID (Wajib diisi)">
+     
     <label for="alasan{id}">Alasan Cancel</label>
     <select id="alasan{id}">
       <option value="">Pilih Alasan</option>
@@ -863,13 +865,13 @@ function generate() {
             break; // Hentikan loop
         }
 
-        jadwalulanginstalasiLaporan += `${nomorJadwalUlangInstalasi} .A/N: ${nama}\n`;
+        jadwalulanginstalasiLaporan += `${nomorJadwalUlangInstalasi}. A/N: ${nama}\n`;
         
         const alasan = getValue("alasan"+i);
-        if (alasan) jadwalulanginstalasiLaporan += `Alasan: ${alasan}\n`;
+        if (alasan) jadwalulanginstalasiLaporan += `Alasan : ${alasan}\n`;
 
         const keterangan = getValue("keterangan"+i);
-        if (keterangan) jadwalulanginstalasiLaporan += `Keterangan: ${keterangan}\n`;
+        if (keterangan) jadwalulanginstalasiLaporan += `Keterangan : ${keterangan}\n`;
         
         // **DIUBAH:** Menggunakan format tanggal baru dan label baru
         jadwalulanginstalasiLaporan += `Tanggal request: ${formatFullDate(jadwal)}\n\n`;
@@ -896,14 +898,14 @@ function generate() {
         const jadwal = document.getElementById("jadwal"+i)?.value;
         
 
-         cancelLaporan += `${nomorCancel}. A/N: ${nama}\n`;
-        cancelLaporan += `CID: ${cid}\n`;
+         cancelLaporan += `${nomorCancel}. A/N : ${nama}\n`;
+      
         
         const alasan = getValue("alasan"+i);
-        if (alasan) cancelLaporan += `Alasan: ${alasan}\n`;
+        if (alasan) cancelLaporan += `Alasan : ${alasan}\n`;
 
         const keterangan = getValue("keterangan"+i);
-        if (keterangan) cancelLaporan += `Keterangan: ${keterangan}\n`;
+        if (keterangan) cancelLaporan += `Keterangan : ${keterangan}\n`;
         
         
         nomorCancel++;
