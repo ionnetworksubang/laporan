@@ -258,7 +258,7 @@ const formTemplates = {
         <input type="number" id="cid{id}" inputmode="numeric" placeholder="Nomor CID">
 
         <label for="passwordmemberarea{id}">Password Member Area <span class="required-label">*</span></label>
-       <input type="text" id="passwordmemberarea{id}" inputmode="numeric" pattern="[0-9]*" placeholder="Password Member Area">
+       <input type="number" id="passwordmemberarea{id}" inputmode="numeric" pattern="[0-9]*" placeholder="Password Member Area">
 
         
         <label for="email{id}">Email <span class="optional-label">
