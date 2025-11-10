@@ -125,7 +125,8 @@ const odpData = [
   "PG 4","PG 5","BELENDUNG 5","BELENDUNG 6","BELENDUNG 7","CISAGA 14",
   "NYINSO 2","PG 6","TAMBAKDAHAN 12","MADANGKARA","RX KING",
   "MAJASARI","MAJASARI 2","MAJASARI 3","MAJASARI 4","MAJASARI 5","MAJASARI 6",
-  "MAJASARI 7","TIKUKUR 2","CIKONDANG",
+  "MAJASARI 7","TIKUKUR 2","CIKONDANG","SATRIA","TAMANSARI","MAJASARI 9",
+  "CENDANA","CENDANA 2","KARANG KENDAL 3","GRAHA SUBANG KENCANA 1","GRAHA SUBANG KENCANA 2",
 ]
 // Fungsi toggle dengan animasi dan status aktif
 function toggleSNForm(id) {
@@ -255,6 +256,9 @@ const formTemplates = {
         
         <label for="cid{id}">CID <span class="required-label">*</span></label>
         <input type="number" id="cid{id}" inputmode="numeric" placeholder="Nomor CID">
+
+        <label for="passwordmemberarea{id}">Password Member Area <span class="required-label">*</span></label>
+        <input type="number" id="cid{id}" inputmode="numeric" placeholder="Password Member Area">
         
         <label for="email{id}">Email <span class="optional-label">
             <i class="fas fa-info-circle"></i> tidak wajib
@@ -580,9 +584,9 @@ const formTemplates = {
     <input type="date" id="jadwal{id}">
   `,
   
-  cancelpemasangan: `
+  cancelinstalasi: `
     <div class="form-header">
-      <h3>Cancel Pemasangan</h3>
+      <h3>Cancel Instalasi</h3>
     </div>
     <input type="hidden" id="jenis{id}" value="Cancel">
     <label for="nama{id}">Nama Pelanggan <span class="required-label">*</span></label>
@@ -753,7 +757,7 @@ function generate() {
   let jadwalulanginstalasiData = [];
   let maintenanceData = [];
   let jadwalulangmaintenanceData = [];
-  let cancelData = [];
+  let cancelinstalasiData = [];
   
   let isLaporanValid = true; // Flag untuk validasi
 
@@ -765,14 +769,14 @@ function generate() {
     else if (jenis === "Jadwal Ulang Instalasi") jadwalulanginstalasiData.push({ id: i });
     else if (jenis === "Maintenance") maintenanceData.push({ id: i });
     else if (jenis === "Jadwal Ulang Maintenance") jadwalulangmaintenanceData.push({ id: i});
-    else if (jenis === "Cancel") cancelData.push({ id: i });
+    else if (jenis === "Cancel") cancelinstalasiData.push({ id: i });
   });
 
   let nomorInstalasi = 1;
   let nomorJadwalUlangInstalasi = 1;
-  let nomorCancel = 1;
   let nomorMaintenance = 1;
   let nomorJadwalUlangMaintenance = 1;
+  let nomorCancelInstalasi = 1;
 
   if (instalasiData.length > 0) {
     let instalasiLaporan = "";
@@ -783,6 +787,7 @@ function generate() {
       if (cid && nama) {
         instalasiLaporan += `${nomorInstalasi}. A/N : ${nama}\n`;
         instalasiLaporan += `CID : ${cid}\n`;
+        instalasiLaporan += `Password Member Area : ${passwordmemberarea}\n`;
         instalasiLaporan += `Email : ${getValue("email"+i)}\n`;
         instalasiLaporan += `OLT : ${getValue("olt"+i)}\n`;
         instalasiLaporan += `ODP : ${getValue("odp"+i)}\n`;
@@ -839,38 +844,7 @@ function generate() {
     }
   }
 
-  if (cancelData.length > 0) {
-    let cancelLaporan = "";
-    // Menggunakan for...of loop agar bisa dihentikan di tengah jalan
-    for (const data of cancelData) {
-      let i = data.id;
-      let nama = getValue("nama"+i);
-      let cid = getValue("cid"+i);
-      if (nama && cid) {
-        const jadwal = document.getElementById("jadwal"+i)?.value;
-        
-
-         cancelLaporan += `${nomorCancel}. A/N : ${nama}\n`;
-      
-        
-        const alasan = getValue("alasan"+i);
-        if (alasan) cancelLaporan += `Alasan : ${alasan}\n`;
-
-        const keterangan = getValue("keterangan"+i);
-        if (keterangan) cancelLaporan += `Keterangan : ${keterangan}\n`;
-        
-        
-        nomorCancel++;
-      }
-    }
-    
-    if (!isLaporanValid) return; // Hentikan fungsi jika laporan tidak valid
-
-    if (cancelLaporan) {
-        laporan += `*CANCEL PEMASANGAN*\n\n` + cancelLaporan;
-    }
-  }
-
+ 
 if (maintenanceData.length > 0) {
     let maintenanceLaporan = "";
     
@@ -913,16 +887,16 @@ if (maintenanceData.length > 0) {
       const odpbaru = getValue("odpbaru"+i);
 
       if (snLama || snBaru) {
-          maintenanceLaporan += `Ganti Perangkat:\n`;
-          if (snLama) maintenanceLaporan += `SN Lama: ${snLama}\n`;
-          if (snBaru) maintenanceLaporan += `SN Baru: ${snBaru}\n`;
+          maintenanceLaporan += `Ganti Perangkat :\n`;
+          if (snLama) maintenanceLaporan += `SN Lama : ${snLama}\n`;
+          if (snBaru) maintenanceLaporan += `SN Baru : ${snBaru}\n`;
           maintenanceLaporan += ``;
       }
 
       if (odplama || odpbaru) {
-          maintenanceLaporan += `Pindah ODP:\n`;
-          if (odplama) maintenanceLaporan += `ODP Lama: ${odplama}\n`;
-          if (odpbaru) maintenanceLaporan += `ODP Baru: ${odpbaru}\n`;
+          maintenanceLaporan += `Pindah ODP :\n`;
+          if (odplama) maintenanceLaporan += `ODP Lama : ${odplama}\n`;
+          if (odpbaru) maintenanceLaporan += `ODP Baru : ${odpbaru}\n`;
           maintenanceLaporan += ``;
       }
       
@@ -960,16 +934,16 @@ if (maintenanceData.length > 0) {
             break; // Hentikan loop
         }
 
-        jadwalulangmaintenanceLaporan += `${nomorJadwalUlangMaintenance} .A/N: ${nama}\n`;
+        jadwalulangmaintenanceLaporan += `${nomorJadwalUlangMaintenance} .A/N : ${nama}\n`;
         
         const alasan = getValue("alasan"+i);
-        if (alasan) jadwalulangmaintenanceLaporan += `Alasan: ${alasan}\n`;
+        if (alasan) jadwalulangmaintenanceLaporan += `Alasan : ${alasan}\n`;
 
         const keterangan = getValue("keterangan"+i);
-        if (keterangan) jadwalulangmaintenanceLaporan += `Keterangan: ${keterangan}\n`;
+        if (keterangan) jadwalulangmaintenanceLaporan += `Keterangan : ${keterangan}\n`;
         
         // **DIUBAH:** Menggunakan format tanggal baru dan label baru
-        jadwalulangmaintenanceLaporan += `Tanggal request: ${formatFullDate(jadwal)}\n\n`;
+        jadwalulangmaintenanceLaporan += `Tanggal request : ${formatFullDate(jadwal)}\n\n`;
         
         nomorJadwalUlangMaintenance++;
       }
@@ -982,6 +956,35 @@ if (maintenanceData.length > 0) {
     }
   }
 
+   if (cancelinstalasiData.length > 0) {
+    let cancelinstalasiLaporan = "";
+    // Menggunakan for...of loop agar bisa dihentikan di tengah jalan
+    for (const data of cancelinstalasiData) {
+      let i = data.id;
+      let nama = getValue("nama"+i);
+      if (nama) {
+        
+
+         cancelinstalasiLaporan += `${nomorCancelInstalasi}. A/N : ${nama}\n`;
+      
+        
+        const alasan = getValue("alasan"+i);
+        if (alasan) cancelinstalasiLaporan += `Alasan : ${alasan}\n`;
+
+        const keterangan = getValue("keterangan"+i);
+        if (keterangan) cancelinstalasiLaporan += `Keterangan : ${keterangan}\n`;
+        
+        
+        nomorCancelInstalasi++;
+      }
+    }
+    
+    if (!isLaporanValid) return; // Hentikan fungsi jika laporan tidak valid
+
+    if (cancelinstalasiLaporan) {
+        laporan += `*CANCEL INSTALASI*\n\n` + cancelinstalasiLaporan;
+    }
+  }
   
 
   document.getElementById("output").innerText = laporan.trim();
