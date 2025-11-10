@@ -258,7 +258,8 @@ const formTemplates = {
         <input type="number" id="cid{id}" inputmode="numeric" placeholder="Nomor CID">
 
         <label for="passwordmemberarea{id}">Password Member Area <span class="required-label">*</span></label>
-        <input type="number" id="cid{id}" inputmode="numeric" placeholder="Password Member Area">
+       <input type="text" id="passwordmemberarea{id}" inputmode="numeric" pattern="[0-9]*" placeholder="Password Member Area">
+
         
         <label for="email{id}">Email <span class="optional-label">
             <i class="fas fa-info-circle"></i> tidak wajib
@@ -787,7 +788,7 @@ function generate() {
       if (cid && nama) {
         instalasiLaporan += `${nomorInstalasi}. A/N : ${nama}\n`;
         instalasiLaporan += `CID : ${cid}\n`;
-        instalasiLaporan += `Password Member Area : ${passwordmemberarea}\n`;
+        instalasiLaporan += `Password Member Area : ${getValue("passwordmemberarea"+i)}\n`;
         instalasiLaporan += `Email : ${getValue("email"+i)}\n`;
         instalasiLaporan += `OLT : ${getValue("olt"+i)}\n`;
         instalasiLaporan += `ODP : ${getValue("odp"+i)}\n`;
