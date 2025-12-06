@@ -129,7 +129,8 @@ const odpData = [
   "CENDANA","CENDANA 2","KARANG KENDAL 3","GRAHA SUBANG KENCANA 1","GRAHA SUBANG KENCANA 2",
   "ASAHI 2","MAJASARI 9","MAJASARI 10","MAJASARI 11","MAJASARI 12","MAJASARI 13","MAJASARI 14",
   "HAUDH","SANAKERTA","KALIANGSANA 8","KALIANGSANA 9","KALIANGSANA 10","KALIANGSANA 11"
-  ,"KALIANGSANA 12","KALIANGSANA 13","KALIANGSANA 14","KALIANGSANA 15","KALIANGSANA 16"
+  ,"KALIANGSANA 12","KALIANGSANA 13","KALIANGSANA 14","KALIANGSANA 15","KALIANGSANA 16",
+  "OJM","KLIN","FLAMBOYAN RESIDANCE","MAJASARI 19","MAJASARI 20","LAMPANG","RUSMAN",
 ]
 // Fungsi toggle dengan animasi dan status aktif
 function toggleSNForm(id) {
@@ -272,6 +273,7 @@ const formTemplates = {
         <label for="olt{id}">OLT <span class="required-label">*</span></label>
         <select id="olt{id}">
             <option value="">-- Pilih OLT --</option>
+            <option value="KALIJATI CDATA">KALIJATI CDATA</option>
             <option value="OFFICE SUBANG 1">OFFICE SUBANG 1</option>
             <option value="TAMBAKDAHAN SUBANG">TAMBAKDAHAN SUBANG</option>
             <option value="PEGADEN SUBANG">PEGADEN SUBANG</option>
@@ -279,6 +281,7 @@ const formTemplates = {
             <option value="MESS SUBANG 2">MESS SUBANG 2</option>
             <option value="GUNUNG TUA">GUNUNG TUA</option>
             <option value="MESS SUBANG">MESS SUBANG</option>
+            
         </select>
         
         <div class="form-grid">
