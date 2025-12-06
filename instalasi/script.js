@@ -279,6 +279,7 @@ const formTemplates = {
             <option value="PEGADEN SUBANG">PEGADEN SUBANG</option>
             <option value="DAWUAN">DAWUAN</option>
             <option value="MESS SUBANG 2">MESS SUBANG 2</option>
+            <option value="KALIJATI CDATA">KALIJATI CDATA</option>
             <option value="GUNUNG TUA">GUNUNG TUA</option>
             <option value="MESS SUBANG">MESS SUBANG</option>
             
