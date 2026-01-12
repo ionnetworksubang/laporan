@@ -140,7 +140,12 @@ const odpData = [
   "WANAKERTA 7","WANAKERTA 8","WANAKERTA 9","BELENDUNG 12","P3K",
   "JUSSY 4","FATULHOER","TRIDJAYA","MAHKOTA 7","BELENDUNG 17","MAJASARI 15",
   "MAJASARI 16","MAJASARI 17","MAJASARI 18", "BELENDUNG 8","BELENDUNG 9",
-  "KALIANGSANA 7"
+  "KALIANGSANA 7","GCP","IDI CAHDI 3","BABAKAN CURUG","KP BABAKAN ASEM",
+  "WANAKERTA 10","WANAKERTA 11","WANAKERTA 12","WANAKERTA 13",
+  "PETALIN","WANAKERTA 14","WANAKERTA 15","WANAKERTA 16","WANAKERTA 17",
+  "WANAKERTA 18","WANAKERTA 19","WANAKERTA 20","TASU","KALIANGSANA 21",
+  "KALIANGSANA 22","KALIANGSANA 23","KALIANGSANA 24","KALIANGSANA 25",
+  "CIBODAS 3","CIBODAS 4",
 
 ]
 // Fungsi toggle dengan animasi dan status aktif
@@ -284,13 +289,12 @@ const formTemplates = {
         <label for="olt{id}">OLT <span class="required-label">*</span></label>
         <select id="olt{id}">
             <option value="">-- Pilih OLT --</option>
-            <option value="KALIJATI CDATA">KALIJATI CDATA</option>
+            <option value="KALIJATI1">KALIJATI1</option>
             <option value="OFFICE SUBANG 1">OFFICE SUBANG 1</option>
             <option value="TAMBAKDAHAN SUBANG">TAMBAKDAHAN SUBANG</option>
             <option value="PEGADEN SUBANG">PEGADEN SUBANG</option>
             <option value="DAWUAN">DAWUAN</option>
             <option value="MESS SUBANG 2">MESS SUBANG 2</option>
-            <option value="KALIJATI CDATA">KALIJATI CDATA</option>
             <option value="GUNUNG TUA">GUNUNG TUA</option>
             <option value="MESS SUBANG">MESS SUBANG</option>
             
