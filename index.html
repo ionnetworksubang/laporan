@@ -3,126 +3,227 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Menu Laporan</title>
+  <title>ION Portal | Menu Teknisi</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
   <style>
-    /* Mengimpor font dari Google Fonts untuk tampilan yang lebih modern */
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
-
-    /* Reset dasar */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      --bg-dark: #020617;
+      --card-bg: rgba(15, 23, 42, 0.7);
+      --primary: #0ea5e9;
+      --primary-hover: #0284c7;
+      --admin-color: #f43f5e;
+      --admin-hover: #e11d48;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
     }
 
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+
     body {
-      font-family: 'Poppins', sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      display: flex; justify-content: center; align-items: center;
       min-height: 100vh;
-      /* Latar belakang gradien yang menarik */
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       padding: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Efek Cahaya Background Ala Cyber/Tech */
+    .glow-bg {
+      position: absolute; top: 10%; left: 50%; transform: translateX(-50%);
+      width: 60vw; height: 60vw;
+      background: radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, rgba(2, 6, 23, 0) 70%);
+      border-radius: 50%; z-index: -1; pointer-events: none;
     }
 
     .container {
-      /* Efek "Glassmorphism" untuk tampilan modern */
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      
-      padding: 40px 50px;
-      border-radius: 20px;
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-      text-align: center;
-      color: #fff;
-      max-width: 400px;
-      width: 100%;
+      background: var(--card-bg);
+      backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 40px 30px; border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      text-align: center; max-width: 400px; width: 100%;
+      animation: slideUp 0.6s ease-out;
     }
 
-    h2 {
-      font-size: 28px;
-      font-weight: 700;
-      margin-bottom: 10px;
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    p {
-      font-size: 16px;
-      margin-bottom: 30px;
-      opacity: 0.8;
-    }
+    .logo-icon { font-size: 3rem; color: var(--primary); margin-bottom: 10px; text-shadow: 0 0 20px rgba(14, 165, 233, 0.5); }
+    h2 { font-size: 1.6rem; font-weight: 800; margin-bottom: 5px; letter-spacing: 1px; }
+    p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 30px; }
 
-    .report-button {
-      display: flex; /* Menggunakan flex untuk alignment */
-      align-items: center;
-      justify-content: center;
-      gap: 12px; /* Jarak antara ikon dan teks */
-      width: 100%;
-      padding: 15px 20px;
-      margin-bottom: 15px; /* Jarak antar tombol */
-      background: linear-gradient(90deg, #5D54A4, #7C78B8);
-      color: #fff;
-      border-radius: 12px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 16px;
-      border: none;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    /* Tombol Menu */
+    .menu-btn {
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      width: 100%; padding: 16px 20px; margin-bottom: 12px;
+      background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text-main); border-radius: 14px; text-decoration: none;
+      font-weight: 600; font-size: 1rem; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer; position: relative; overflow: hidden;
     }
+    .menu-btn:hover { background: rgba(14, 165, 233, 0.1); border-color: var(--primary); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); }
+    .menu-btn i { font-size: 1.2rem; color: var(--primary); transition: 0.3s; }
+    .menu-btn:hover i { transform: scale(1.2); }
+
+    /* Tombol Khusus Admin */
+    .admin-btn { border-color: rgba(244, 63, 94, 0.3); background: rgba(244, 63, 94, 0.05); margin-top: 25px; }
+    .admin-btn i { color: var(--admin-color); }
+    .admin-btn:hover { background: var(--admin-color); border-color: var(--admin-color); color: white; box-shadow: 0 10px 20px rgba(244, 63, 94, 0.3); }
+    .admin-btn:hover i { color: white; }
+
+    /* =========================================
+       MODAL LOGIN OVERLAY
+       ========================================= */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+      background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px);
+      display: flex; justify-content: center; align-items: center;
+      z-index: 1000; opacity: 0; visibility: hidden; transition: 0.3s;
+    }
+    .modal-overlay.active { opacity: 1; visibility: visible; }
     
-    /* Menghilangkan margin bawah pada tombol terakhir */
-    .container a:last-of-type {
-        margin-bottom: 0;
+    .modal-box {
+      background: #0f172a; padding: 30px; border-radius: 20px;
+      width: 90%; max-width: 350px; border: 1px solid rgba(244, 63, 94, 0.3);
+      text-align: center; transform: scale(0.9); transition: 0.3s;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.5);
     }
-
-    .report-button:hover {
-      /* Efek saat kursor di atas tombol */
-      transform: translateY(-3px);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-      background: linear-gradient(90deg, #6A63BF, #8C88CC);
-    }
+    .modal-overlay.active .modal-box { transform: scale(1); }
     
-    .report-button svg {
-      width: 22px;
-      height: 22px;
-      flex-shrink: 0; /* Mencegah ikon menyusut */
+    .modal-box h3 { color: white; margin-bottom: 20px; font-size: 1.3rem; display: flex; justify-content: center; gap: 10px; align-items: center;}
+    .modal-box h3 i { color: var(--admin-color); }
+    
+    .input-group { position: relative; margin-bottom: 15px; }
+    .input-group i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+    .modal-box input {
+      width: 100%; padding: 14px 15px 14px 45px; background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
+      color: white; font-size: 0.95rem; outline: none; transition: 0.3s;
     }
-
+    .modal-box input:focus { border-color: var(--admin-color); box-shadow: 0 0 10px rgba(244, 63, 94, 0.2); }
+    
+    .error-text { color: var(--admin-color); font-size: 0.85rem; margin-bottom: 15px; font-weight: 600; display: none; }
+    
+    .btn-submit { width: 100%; padding: 14px; background: var(--admin-color); border: none; color: white; font-weight: 700; border-radius: 12px; font-size: 1rem; cursor: pointer; transition: 0.3s; margin-bottom: 10px; }
+    .btn-submit:hover { background: var(--admin-hover); }
+    .btn-cancel { width: 100%; padding: 12px; background: transparent; border: none; color: var(--text-muted); font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: 0.3s; }
+    .btn-cancel:hover { color: white; }
   </style>
 </head>
-
-
 <body>
+
+  <div class="glow-bg"></div>
+
   <div class="container">
-    <h2>Pilih Jenis Laporan</h2>
-    <p>Silakan pilih salah satu menu di bawah ini untuk melanjutkan.</p> 
-    
-   <a href="instalasi/index.html" class="report-button">
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m3.75 9v6m3-3H9m1.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
-  </svg>
-  Laporan Instalasi
-</a>
+    <i class="fas fa-network-wired logo-icon"></i>
+    <h2>ION PORTAL</h2>
+    <p>Pilih menu layanan di bawah ini</p> 
 
-<a href="terminate/index.html" class="report-button">
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M5.636 5.636a9 9 0 1 0 12.728 0M12 3v9" />
-  </svg>
-  Laporan Terminate
-</a>
+    <a href="instalasi/index.html" class="menu-btn">
+      <i class="fas fa-file-signature"></i> Laporan Teknisi
+    </a>
 
-<a href="https://ionnetworksubang.github.io/form/" class="report-button">
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 0 1 .778-.332 48.294 48.294 0 0 0 5.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
-  </svg>
-  Kirim WhatsApp
-</a>
-    
+    <a href="terminate/index.html" class="menu-btn">
+      <i class="fas fa-user-minus"></i> Laporan Terminate
+    </a>
 
+    <a href="https://ionnetworksubang.github.io/form/" class="menu-btn">
+      <i class="fab fa-whatsapp"></i> Form Daftar Pelanggan
+    </a>
+
+    <button class="menu-btn admin-btn" onclick="openModal()">
+      <i class="fas fa-database"></i> Database ODP (Admin)
+    </button>
   </div>
+
+  <div class="modal-overlay" id="loginModal">
+    <div class="modal-box">
+      <h3><i class="fas fa-shield-alt"></i> Akses Terbatas</h3>
+      <p style="font-size: 0.8rem; margin-bottom: 20px;">Silakan login untuk mengelola database ODP.</p>
+      
+      <div class="input-group">
+        <i class="fas fa-envelope"></i>
+        <input type="email" id="emailInput" placeholder="Email" autocomplete="off">
+      </div>
+      
+      <div class="input-group">
+        <i class="fas fa-lock"></i>
+        <input type="password" id="passwordInput" placeholder="Password">
+      </div>
+
+      <div class="error-text" id="errorMsg"><i class="fas fa-exclamation-circle"></i> Email atau Password salah!</div>
+
+      <button class="btn-submit" onclick="checkLogin()">Login Sekarang</button>
+      <button class="btn-cancel" onclick="closeModal()">Batal</button>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById('loginModal');
+    const emailInput = document.getElementById('emailInput');
+    const passInput = document.getElementById('passwordInput');
+    const errorMsg = document.getElementById('errorMsg');
+
+    // Buka Modal
+    function openModal() {
+      modal.classList.add('active');
+      emailInput.value = '';
+      passInput.value = '';
+      errorMsg.style.display = 'none';
+      emailInput.focus();
+    }
+
+    // Tutup Modal
+    function closeModal() {
+      modal.classList.remove('active');
+    }
+
+    // Cek Kredensial Login
+    function checkLogin() {
+      const email = emailInput.value.trim();
+      const password = passInput.value.trim();
+
+      // VALIDASI AKUN
+      if (email === "admin@ion.com" && password === "Ramdan") {
+        
+        errorMsg.style.color = "#10b981"; // Warna hijau sukses
+        errorMsg.innerHTML = '<i class="fas fa-check-circle"></i> Akses Diberikan!';
+        errorMsg.style.display = 'block';
+
+        // Redirect ke halaman Admin (GANTI LINK DI BAWAH INI SESUAI FILE ADMIN ANDA)
+        // Jika file admin-odp.html ada di folder yang sama, gunakan: 'admin-odp.html'
+        setTimeout(() => {
+          window.location.href = "admin/index.html"; 
+        }, 800);
+
+      } else {
+        errorMsg.style.color = "var(--admin-color)";
+        errorMsg.innerHTML = '<i class="fas fa-exclamation-circle"></i> Akses Ditolak!';
+        errorMsg.style.display = 'block';
+        
+        // Efek getar (shake) kalau salah
+        const box = document.querySelector('.modal-box');
+        box.style.transform = 'translateX(10px)';
+        setTimeout(() => box.style.transform = 'translateX(-10px)', 100);
+        setTimeout(() => box.style.transform = 'translateX(10px)', 200);
+        setTimeout(() => box.style.transform = 'scale(1)', 300);
+      }
+    }
+
+    // Bisa tekan "Enter" untuk login
+    passInput.addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        checkLogin();
+      }
+    });
+  </script>
+
 </body>
-</html>
+          </html>
