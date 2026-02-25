@@ -1,1 +1,319 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ION Portal | Admin ODP</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <style>
+        :root {
+            --primary: #3b82f6; --primary-hover: #2563eb;
+            --danger: #ef4444; --warning: #f59e0b;
+            --bg-color: #f8fafc; --card-bg: #ffffff;
+            --text-main: #0f172a; --text-muted: #64748b;
+            --border: #e2e8f0; --radius: 16px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); padding: 20px; }
+
+        .header { text-align: center; margin-bottom: 30px; margin-top: 10px; }
+        .header h1 { font-size: 1.8rem; font-weight: 800; color: #0f172a; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .header p { color: var(--text-muted); font-size: 0.95rem; margin-top: 5px; }
+
+        .container { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 20px; }
+        @media (min-width: 768px) { .container { grid-template-columns: 1fr 1fr; align-items: start; } }
+
+        .card { background: var(--card-bg); padding: 25px; border-radius: var(--radius); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border: 1px solid var(--border); }
+        .card-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+
+        label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 0.85rem; color: var(--text-muted); }
+        select, input, textarea { width: 100%; padding: 12px 15px; border: 1px solid var(--border); border-radius: 10px; font-size: 0.95rem; color: var(--text-main); margin-bottom: 20px; transition: 0.3s; background: #f8fafc; outline: none; }
+        select:focus, input:focus, textarea:focus { border-color: var(--primary); background: white; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); }
+        textarea { resize: vertical; font-family: monospace; font-size: 0.85rem; white-space: pre-wrap; }
+
+        button.btn-primary { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 10px; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: 0.3s; display: flex; justify-content: center; gap: 8px; align-items: center; }
+        button.btn-primary:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3); }
+        button:disabled { opacity: 0.7; cursor: not-allowed; transform: none; box-shadow: none; }
+
+        .odp-list-container { max-height: 400px; overflow-y: auto; padding-right: 5px; }
+        .odp-list-container::-webkit-scrollbar { width: 6px; }
+        .odp-list-container::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        
+        .odp-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; background: #f1f5f9; border-radius: 10px; margin-bottom: 10px; border: 1px solid transparent; transition: 0.2s; }
+        .odp-item:hover { border-color: #cbd5e1; background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .odp-name { font-weight: 600; font-size: 0.85rem; color: #334155; }
+        
+        .btn-delete { background: #fee2e2; color: var(--danger); border: none; width: 32px; height: 32px; border-radius: 8px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; }
+        .btn-delete:hover { background: var(--danger); color: white; }
+
+        .empty-state { text-align: center; padding: 30px 10px; color: var(--text-muted); font-size: 0.9rem; }
+        .empty-state i { font-size: 2.5rem; color: #cbd5e1; margin-bottom: 10px; display: block; }
+        
+        .global-loader { position: fixed; top: 15px; right: 15px; background: white; padding: 8px 15px; border-radius: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); font-size: 0.8rem; font-weight: 600; color: var(--primary); display: none; align-items: center; gap: 8px; z-index: 1000; border: 1px solid var(--border); }
+        .global-loader.active { display: flex; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .info-box { background: #eff6ff; border-left: 4px solid var(--primary); padding: 10px 15px; border-radius: 4px; font-size: 0.8rem; color: #1e3a8a; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+
+    <div class="global-loader" id="syncLoader">
+        <i class="fas fa-circle-notch fa-spin"></i> Sinkronisasi Data...
+    </div>
+
+    <div class="header">
+        <h1><i class="fas fa-network-wired text-primary"></i> Admin Panel ODP</h1>
+        <p>Kelola (Tambah & Hapus) Titik ODP per OLT</p>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-title">
+                <i class="fas fa-layer-group" style="color: var(--primary);"></i> Tambah ODP Baru
+            </div>
+            
+            <div class="info-box">
+                <i class="fas fa-info-circle"></i> <b>Bisa 1 atau Banyak:</b> Ketik 1 ODP saja, <u>atau</u> paste banyak ODP sekaligus dengan memisahkan tiap nama menggunakan garis baru (Enter).
+            </div>
+
+            <form id="addForm">
+                <label for="pilihOlt">Pilih OLT Induk</label>
+                <select id="pilihOlt" required>
+                    <option value="">-- Memuat OLT... --</option>
+                </select>
+
+                <label for="namaOdpBulk">Nama ODP</label>
+                <textarea id="namaOdpBulk" rows="6" placeholder="Contoh isi 1:&#10;ODP-SBG-001&#10;&#10;Atau contoh isi banyak:&#10;ODP-SBG-002&#10;ODP-SBG-003&#10;ODP-SBG-004" required></textarea>
+
+                <button type="submit" class="btn-primary" id="btnSubmit" disabled>
+                    <i class="fas fa-cloud-upload-alt"></i> Simpan ke Database
+                </button>
+            </form>
+        </div>
+
+        <div class="card">
+            <div class="card-title">
+                <i class="fas fa-tasks" style="color: var(--warning);"></i> Daftar & Kelola ODP
+            </div>
+            
+            <label for="filterOlt">Lihat ODP di OLT:</label>
+            <select id="filterOlt" onchange="renderOdpList()">
+                <option value="">-- Pilih OLT untuk melihat ODP --</option>
+            </select>
+
+            <div class="odp-list-container" id="odpListContainer">
+                <div class="empty-state">
+                    <i class="fas fa-inbox"></i>
+                    Pilih OLT di atas untuk memunculkan daftar ODP.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ⚠️ PENTING: GANTI URL INI DENGAN URL WEB APP GOOGLE SCRIPT ANDA!
+        const API_URL = "https://script.google.com/macros/s/AKfycbwoy3IE5ve-oSqDZucuprr-zV_4hhWZrAoAFY-xe5RSdMxhUmA7Xh_JPkQFwibJPNEz/exec";
+
+        let masterData = {}; 
+
+        async function fetchDatabase() {
+            const loader = document.getElementById('syncLoader');
+            loader.classList.add('active');
+            document.getElementById('btnSubmit').disabled = true;
+
+            try {
+                const response = await fetch(API_URL + "?action=getMapping"); 
+                const result = await response.json();
+                
+                if (result.ok) {
+                    masterData = result.data;
+                    updateDropdowns();
+                    renderOdpList(); 
+                } else {
+                    Swal.fire('Error!', 'Gagal mengambil data dari server.', 'error');
+                }
+            } catch (error) {
+                console.error(error);
+                Swal.fire('Koneksi Terputus!', 'Pastikan URL API benar & internet stabil.', 'error');
+            } finally {
+                loader.classList.remove('active');
+                document.getElementById('btnSubmit').disabled = false;
+            }
+        }
+
+        function updateDropdowns() {
+            const selectAdd = document.getElementById('pilihOlt');
+            const selectFilter = document.getElementById('filterOlt');
+            const activeFilter = selectFilter.value; 
+
+            let optionsHTML = '<option value="">-- Pilih OLT --</option>';
+            const olts = Object.keys(masterData).sort();
+            
+            olts.forEach(olt => { optionsHTML += `<option value="${olt}">${olt}</option>`; });
+
+            selectAdd.innerHTML = optionsHTML;
+            selectFilter.innerHTML = optionsHTML;
+            
+            if(activeFilter && olts.includes(activeFilter)) {
+                selectFilter.value = activeFilter; 
+            }
+        }
+
+        function renderOdpList() {
+            const selectedOlt = document.getElementById('filterOlt').value;
+            const container = document.getElementById('odpListContainer');
+
+            if (!selectedOlt) {
+                container.innerHTML = `<div class="empty-state"><i class="fas fa-inbox"></i>Pilih OLT di atas untuk memunculkan daftar ODP.</div>`;
+                return;
+            }
+
+            const odpArray = masterData[selectedOlt] || [];
+
+            if (odpArray.length === 0) {
+                container.innerHTML = `<div class="empty-state"><i class="fas fa-folder-open"></i>Belum ada ODP terdaftar di OLT ini.</div>`;
+                return;
+            }
+
+            // Urutkan dan hitung total ODP
+            odpArray.sort();
+            
+            let listHTML = `<div style="font-size:0.8rem; font-weight:600; color:#64748b; margin-bottom:10px;">Total: ${odpArray.length} ODP</div>`;
+
+            listHTML += odpArray.map(odp => `
+                <div class="odp-item">
+                    <span class="odp-name"><i class="fas fa-box" style="color:#94a3b8; margin-right:8px;"></i> ${odp}</span>
+                    <button class="btn-delete" onclick="deleteOdp('${odp}')" title="Hapus ${odp}">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `).join('');
+
+            container.innerHTML = listHTML;
+        }
+
+        // --- FUNGSI TAMBAH ODP (1 ATAU MASSAL) ---
+        document.getElementById('addForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const olt = document.getElementById('pilihOlt').value;
+            const rawOdpText = document.getElementById('namaOdpBulk').value;
+            const btnSubmit = document.getElementById('btnSubmit');
+
+            // 1. Bersihkan & Pisahkan teks
+            let odpArray = rawOdpText.split('\n')
+                .map(odp => odp.trim().toUpperCase()) 
+                .filter(odp => odp !== ''); 
+
+            if(odpArray.length === 0) {
+                Swal.fire('Oops!', 'Daftar ODP tidak boleh kosong.', 'warning');
+                return;
+            }
+
+            // 2. Cek apakah ada ODP yang duplikat 
+            const existingOdps = masterData[olt] || [];
+            let validOdps = [];
+            let duplicateOdps = [];
+
+            odpArray.forEach(odp => {
+                if(existingOdps.includes(odp)) {
+                    duplicateOdps.push(odp);
+                } else if (!validOdps.includes(odp)) {
+                    validOdps.push(odp); 
+                }
+            });
+
+            if(validOdps.length === 0) {
+                Swal.fire('Info', 'Semua ODP yang Anda masukkan sudah terdaftar di OLT ini.', 'info');
+                return;
+            }
+
+            // Pesan Konfirmasi
+            let confirmMsg = `Anda akan menambahkan <b>${validOdps.length} ODP baru</b> ke OLT <b>${olt}</b>.`;
+            if(duplicateOdps.length > 0) {
+                confirmMsg += `<br><br><small style="color:red;">Diabaikan karena sudah ada: ${duplicateOdps.length} ODP.</small>`;
+            }
+
+            const confirm = await Swal.fire({
+                title: 'Konfirmasi Simpan',
+                html: confirmMsg,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3b82f6',
+                cancelButtonColor: '#94a3b8',
+                confirmButtonText: 'Ya, Simpan!'
+            });
+
+            if (!confirm.isConfirmed) return;
+
+            // Proses Kirim Data
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Menyimpan...';
+
+            try {
+                const formData = new URLSearchParams();
+                
+                // Gunakan addOdpBulk meskipun hanya 1 ODP (Fungsinya menangani array dengan baik)
+                formData.append("data", JSON.stringify({ 
+                    action: "addOdpBulk", 
+                    payload: { olt: olt, odpList: validOdps } 
+                }));
+
+                const response = await fetch(API_URL, { method: 'POST', body: formData });
+                const result = await response.json();
+                
+                if (result.ok) {
+                    document.getElementById('namaOdpBulk').value = ''; 
+                    Swal.fire('Berhasil!', result.data.message, 'success');
+                    fetchDatabase(); // Refresh data terbaru
+                } else throw new Error(result.data.message);
+            } catch (error) {
+                Swal.fire('Gagal!', 'Terjadi kesalahan saat menyimpan ODP.', 'error');
+            } finally {
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Simpan ke Database';
+            }
+        });
+
+        // --- FUNGSI HAPUS ODP ---
+        async function deleteOdp(namaOdp) {
+            const confirm = await Swal.fire({
+                title: 'Yakin hapus ODP ini?',
+                text: `Menghapus permanen ODP: ${namaOdp}`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#94a3b8',
+                confirmButtonText: 'Ya, Hapus!'
+            });
+
+            if (!confirm.isConfirmed) return;
+            document.getElementById('syncLoader').classList.add('active');
+
+            try {
+                const formData = new URLSearchParams();
+                formData.append("data", JSON.stringify({ action: "deleteOdpSimple", payload: { namaOdp: namaOdp } }));
+
+                const response = await fetch(API_URL, { method: 'POST', body: formData });
+                const result = await response.json();
+                
+                if (result.ok) {
+                    Swal.fire({ icon: 'success', title: 'Terhapus!', text: `ODP ${namaOdp} dihapus.`, timer: 1500, showConfirmButton: false });
+                    fetchDatabase(); 
+                } else {
+                    Swal.fire('Gagal!', result.data.message, 'error');
+                }
+            } catch (error) {
+                Swal.fire('Error!', 'Gagal menghubungi database.', 'error');
+            }
+        }
+
+        window.onload = fetchDatabase;
+    </script>
+</body>
+              </html>
 
