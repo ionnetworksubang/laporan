@@ -8,22 +8,29 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div id="techLoader" class="tech-loader">
+    <div class="loader-content">
+      <div class="radar"></div>
+      <i class="fas fa-satellite-dish icon-pulse"></i>
+      <h2>ION NETWORK</h2>
+      <p id="loaderText">Menyinkronkan Database ODP...</p>
+      <div class="progress-bar"><div class="progress-fill"></div></div>
+    </div>
+  </div>
+
   <div class="container">
     <h2>Form Laporan Subang</h2>
     <div class="subtitle">Instalasi, Reschedule & Maintenance</div>
 
-    <div class="date-display" id="currentDate">
-      </div>
+    <div class="date-display" id="currentDate"></div>
 
     <div class="header-input">
       <label for="reportTitle">Judul Laporan</label>
-       <select id="reportTitle">
-    <option value="*LAPORAN INSTALASI SUBANG*">LAPORAN INSTALASI SUBANG</option>
-    <option value="*LAPORAN MAINTENANCE SUBANG*">LAPORAN MAINTENANCE SUBANG</option>
-    <option value="*LAPORAN INSTALASI & MAINTENANCE SUBANG*">
-      LAPORAN INSTALASI & MAINTENANCE SUBANG
-    </option>
-  </select>
+      <select id="reportTitle">
+        <option value="*LAPORAN INSTALASI SUBANG*">LAPORAN INSTALASI SUBANG</option>
+        <option value="*LAPORAN MAINTENANCE SUBANG*">LAPORAN MAINTENANCE SUBANG</option>
+        <option value="*LAPORAN INSTALASI & MAINTENANCE SUBANG*">LAPORAN INSTALASI & MAINTENANCE SUBANG</option>
+      </select>
       
       <label for="reportDate">Tanggal Laporan</label>
       <input type="text" id="reportDate" placeholder="Contoh: Rabu, 24 September 2025">
@@ -57,7 +64,6 @@
     </div>
     
     <pre id="output"></pre>
- 
   </div>
 
   <script src="script.js"></script>
